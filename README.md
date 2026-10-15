@@ -2,6 +2,8 @@
 
 _Our Culture Is Agriculture._
 
+Repository: [hetbhalodi8907/PEANUTAGRISEEDS-PVT-LTD-](https://github.com/hetbhalodi8907/PEANUTAGRISEEDS-PVT-LTD-)
+
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4. No animation library — the intro is pure CSS.
 
 ## Run

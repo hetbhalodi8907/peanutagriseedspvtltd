@@ -15,7 +15,7 @@ export default function DealerEnquiryPage() {
         <p>We work with dealers, distributors and bulk purchasers of groundnut seeds.</p>
       </PageHero>
       <UpcomingSection
-        note="Our online enquiry form is being prepared. Until it is available, please call or email us directly. This page will include:"
+        note="A dedicated dealer enquiry form is being prepared. Until then, you can send an enquiry through the form on our Contact Us page, or call or email us directly. This page will include:"
         planned={[
           "An enquiry form for dealers, distributors and bulk purchasers",
           "Direct calling and WhatsApp options",

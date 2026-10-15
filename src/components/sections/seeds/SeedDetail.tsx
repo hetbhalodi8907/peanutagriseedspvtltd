@@ -3,7 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon, PhoneIcon, WhatsAppIcon } from "@/compon
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
-import { seedDetailNotice, seedHref, seedVarieties, type SeedVariety } from "@/content/seeds";
+import { seedDetailNotice, seedEnquiryHref, seedHref, seedVarieties, type SeedVariety } from "@/content/seeds";
 import { PackagingImage } from "./PackagingImage";
 
 /**
@@ -69,7 +69,7 @@ export function SeedDetail({ seed }: { seed: SeedVariety }) {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-            <ButtonLink href="/contact" variant="forest" size="lg">
+            <ButtonLink href={seedEnquiryHref(seed)} variant="forest" size="lg">
               Enquire About This Seed
               <ArrowRightIcon className="size-4" />
             </ButtonLink>

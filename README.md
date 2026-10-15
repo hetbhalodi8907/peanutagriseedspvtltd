@@ -14,6 +14,8 @@ npm start
 npm run images  # regenerate responsive images only (incremental)
 ```
 
+The enquiry form needs email settings: copy `.env.example` to `.env.local` and see [docs/INQUIRY-EMAIL-SETUP.md](docs/INQUIRY-EMAIL-SETUP.md). The site works without them, but the form will report that enquiries cannot be sent.
+
 ## Where things live
 
 | Path | Purpose |
@@ -40,7 +42,10 @@ npm run images  # regenerate responsive images only (incremental)
 | `scripts/optimize-images.mjs` | Build-time generator: writes `public/_img/<name>-<width>.webp` for every site image (not committed). |
 | `src/lib/image-loader.ts` | Custom `next/image` loader that points srcsets at the generated files. |
 | `src/middleware.ts` | Redirects any URL containing capital letters to lowercase (308). See Gotchas. |
-| `src/app/{quality,dealer-enquiry,contact}` | Routes that still render `UpcomingSection` placeholders. Replace each when its module is built. |
+| `src/app/{quality,dealer-enquiry}` | Routes that still render `UpcomingSection` placeholders. Replace each when its module is built. |
+| `src/app/api/enquiry/route.ts`, `src/lib/enquiry/` | Enquiry endpoint and its validation, email, Resend and rate-limit modules. See the email setup guide. |
+| `src/components/sections/contact/EnquiryForm.tsx` | The enquiry form on `/contact` (`?variety=<name or slug>` preselects a variety). |
+| `docs/INQUIRY-EMAIL-SETUP.md` | Email provider, environment variables, deployment, live-delivery check, troubleshooting. |
 | `docs/IMAGE-CREDITS.md` | Source and licence for every photograph. |
 
 ## Homepage notes (Phase 2)
@@ -61,6 +66,12 @@ npm run images  # regenerate responsive images only (incremental)
 - **Phase 5 (verified details):** add the verified fields to `SeedVariety`, set `detailStatus: "published"` for each completed variety, and render those fields in `SeedDetail`. Until then, pages show an honest "being prepared" notice. No per-variety premium/hybrid classification is assigned until the company confirms it.
 - **Search** is client-side. It compares upper-case letters and digits only, so "girnar 4", "Girnar-4" and "tj37" all match.
 - **Packaging images:** displayed with `object-contain` on a stage whose colour (`#FDF6EA`) matches the images' own opaque background. They're served at quality 85 so the small package text stays sharp.
+
+## Enquiry form notes (Phase 6)
+
+- **Hosting:** the site now has one server route (`/api/enquiry`), so it must be hosted with a Node server or serverless functions, not a static export. All pages remain statically generated.
+- **Shared validation:** the browser form and the server use the same rules (`src/lib/enquiry/schema.ts`). The variety dropdown and server validation both come from `seedVarietyOptions` in `src/content/seeds.ts`.
+- **Variety links:** variety pages link to `/contact?variety=<slug>`; `seedEnquiryHref()` builds the URL.
 
 ## Gotchas
 

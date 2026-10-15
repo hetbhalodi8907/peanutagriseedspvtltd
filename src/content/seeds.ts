@@ -67,6 +67,12 @@ export function getSeedVariety(slug: string) {
 
 export const seedHref = (seed: Pick<SeedVariety, "slug">) => `/seeds/${seed.slug}`;
 
+/** Contact page with this variety preselected in the enquiry form. */
+export const seedEnquiryHref = (seed: Pick<SeedVariety, "slug">) => `/contact?variety=${seed.slug}`;
+
+/** Name/slug pairs for the enquiry form dropdown and server-side validation (no image data). */
+export const seedVarietyOptions = seedVarieties.map(({ slug, name }) => ({ slug, name }));
+
 export const packagingAlt = (seed: Pick<SeedVariety, "name">) =>
   `${seed.name} groundnut seed packaging by ${siteConfig.name}`;
 

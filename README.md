@@ -17,14 +17,26 @@ npm start
 
 | Path | Purpose |
 | --- | --- |
-| `src/config/site.ts` | **Single source of truth** for company facts, contact details and navigation. Only confirmed facts go here. |
-| `src/app/globals.css` | Design tokens (`@theme`), intro animation, page-entrance and reduced-motion rules. |
+| `src/config/site.ts` | **Single source of truth** for company facts, leadership, contact details (phone defined once; call and WhatsApp links derive from it) and navigation. Only confirmed facts go here. |
+| `src/content/home.ts` | Homepage copy, section by section. Reads facts from `site.ts`. |
+| `src/content/images.ts` | Photo registry: file, alt text, credit. See `docs/IMAGE-CREDITS.md`. |
+| `src/assets/images/home/` | Licensed (CC0) photography, statically imported (auto dimensions, blur placeholders, AVIF/WebP). |
+| `src/app/globals.css` | Design tokens (`@theme`), intro animation, page entrance, scroll reveal, reduced-motion rules. |
 | `public/brand/peanut-agri-seeds-logo.png` | Official logo (unaltered original, 1254×1254). `src/app/icon.png` / `apple-icon.png` are resized copies. |
 | `src/components/brand/` | `BrandLogo` (logo with missing-asset fallback), `BrandLockup` (logo + name), `BrandIntro` + `intro-script.ts`. |
 | `src/components/layout/` | `TopBar`, `SiteHeader`, `MobileNav`, `SiteFooter`. |
-| `src/components/ui/` | `Container`, `ButtonLink` / `buttonClasses`, `Eyebrow`. |
-| `src/components/sections/` | `HomeHero`, `BrandFacts`, `PageHero`, `ContactDetails`, `UpcomingSection`, `FieldLines`. |
+| `src/components/ui/` | `Container`, `ButtonLink` / `buttonClasses`, `Eyebrow`, `SectionHeading`. |
+| `src/components/sections/` | Shared sections: `PageHero`, `ContactDetails`, `UpcomingSection`, `FieldLines`. |
+| `src/components/sections/home/` | Homepage sections, in page order: `HomeHero`, `TrustStrip`, `CompanyIntro`, `SeedRangePreview`, `ValuesSection`, `QualityCommitment`, `DealerCta`, `ContactQuickActions`, plus `FloatingWhatsApp`. |
 | `src/app/{about,seeds,quality,dealer-enquiry,contact}` | Routes. Each currently renders `UpcomingSection` — replace it when that module is built. |
+| `docs/IMAGE-CREDITS.md` | Source and licence for every photograph. |
+
+## Homepage notes (Phase 2)
+
+- **Seed range:** categories are data in `seedRange.categories` (`src/content/home.ts`). Phase 4/5 can add varieties and real packaging images per category without touching the layout. The category photos are general crop imagery, not packaging.
+- **Floating WhatsApp:** shown on the homepage only. It hides while any element marked `data-hide-floating-contact` is on screen (hero, contact section, footer) and whenever a link or button is underneath it.
+- **Scroll reveal** (`.reveal-on-scroll`) uses CSS scroll-driven animations. Browsers without support, and visitors who prefer reduced motion, simply see the content.
+- **Gotcha:** `ButtonLink` always sets `inline-flex`, so a `hidden` class on it loses. Control a button's visibility with a wrapper element.
 
 ## Brand intro behaviour
 

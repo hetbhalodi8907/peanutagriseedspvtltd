@@ -62,6 +62,56 @@ export function CloseIcon(props: IconProps) {
   );
 }
 
+export function ArrowDownIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 5v14M6 13l6 6 6-6" />
+    </Icon>
+  );
+}
+
+/** Concentric growth rings — used for years of experience. */
+export function RingsIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5.5" />
+      <circle cx="12" cy="12" r="2" />
+    </Icon>
+  );
+}
+
+export function SproutIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 21v-9" />
+      <path d="M12 12c0-4 2.5-6.5 7-6.5 0 4.2-2.6 6.5-7 6.5Z" />
+      <path d="M12 14.5c0-3.3-2-5.5-6.5-5.5 0 3.6 2.3 5.5 6.5 5.5Z" />
+      <path d="M8 21h8" />
+    </Icon>
+  );
+}
+
+/** Magnifier — attention to detail. */
+export function DetailIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m20 20-4.4-4.4" />
+      <path d="M8.5 11h5M11 8.5v5" />
+    </Icon>
+  );
+}
+
+export function WhatsAppIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.2a8.5 8.5 0 1 1 15.7-4.5Z" />
+      <path d="M9 8.3c.3-.5.7-.6 1-.5l.9.3.6 1.6-.8.8a5.4 5.4 0 0 0 2.6 2.6l.8-.8 1.6.6.3.9c.1.3 0 .7-.5 1a2.8 2.8 0 0 1-2.5.3 7.8 7.8 0 0 1-4.3-4.3A2.8 2.8 0 0 1 9 8.3Z" />
+    </Icon>
+  );
+}
+
 export function ArrowRightIcon(props: IconProps) {
   return (
     <Icon {...props}>

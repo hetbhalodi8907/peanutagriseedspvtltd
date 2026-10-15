@@ -3,6 +3,7 @@ import { BrandLogo } from "@/components/brand/BrandLogo";
 import { MailIcon, MapPinIcon, PhoneIcon } from "@/components/icons";
 import { Container } from "@/components/ui/Container";
 import { mainNav, siteConfig } from "@/config/site";
+import { breakableEmail } from "@/lib/breakable-email";
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return <h2 className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-gold-400">{children}</h2>;
@@ -15,7 +16,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-forest-950 text-cream">
+    <footer data-hide-floating-contact className="bg-forest-950 text-cream">
       <Container className="grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10 lg:py-20">
         <div className="sm:col-span-2 lg:col-span-4">
           <span className="inline-block overflow-hidden rounded-xl bg-paper">
@@ -73,9 +74,9 @@ export function SiteFooter() {
               </a>
             </li>
             <li>
-              <a href={contact.emailHref} className={`flex gap-3 break-all ${linkClass}`}>
+              <a href={contact.emailHref} className={`flex gap-3 [overflow-wrap:anywhere] ${linkClass}`}>
                 <MailIcon className="mt-0.5 size-4 shrink-0 text-gold-400" />
-                {contact.email}
+                <span>{breakableEmail(contact.email)}</span>
               </a>
             </li>
           </ul>

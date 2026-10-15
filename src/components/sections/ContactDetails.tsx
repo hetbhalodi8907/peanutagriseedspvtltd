@@ -1,5 +1,6 @@
 import { MailIcon, MapPinIcon, PhoneIcon } from "@/components/icons";
 import { factoryAddressLine, siteConfig } from "@/config/site";
+import { breakableEmail } from "@/lib/breakable-email";
 import { cn } from "@/lib/cn";
 
 /** Confirmed company contact details with working call / email links. */
@@ -24,7 +25,7 @@ export function ContactDetails({ className, title = "Contact us directly" }: { c
               <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-700">{label}</span>
               {href ? (
                 <a href={href} className="mt-1 block font-semibold [overflow-wrap:anywhere] text-forest-900 underline-offset-4 hover:underline">
-                  {value}
+                  {breakableEmail(value)}
                 </a>
               ) : (
                 <span className="mt-1 block text-charcoal/80">{value}</span>

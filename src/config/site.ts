@@ -3,22 +3,32 @@
  * Only add facts here that the company has confirmed — every page reads from this file.
  */
 
+/** The one place the company phone number is defined (E.164). Call and WhatsApp links derive from it. */
+const PHONE_E164 = "+917016017561";
+const WHATSAPP_GREETING =
+  "Hello PEANUT AGRI SEEDS PVT. LTD., I would like to enquire about your groundnut seed varieties.";
+
 export const siteConfig = {
   name: "PEANUT AGRI SEEDS PVT. LTD.",
   shortName: "Peanut Agri Seeds",
   tagline: "Our Culture Is Agriculture.",
   description:
-    "PEANUT AGRI SEEDS PVT. LTD. supplies premium groundnut seeds and hybrid groundnut seeds to farmers, dealers, distributors and bulk purchasers from its factory at Sondarada, Gujarat.",
+    "PEANUT AGRI SEEDS PVT. LTD. supplies premium groundnut seeds and hybrid groundnut seeds to farmers, retailers, dealers, distributors and bulk purchasers from its factory at Sondarada, Gujarat.",
   industry: "Agricultural seeds",
   yearsInMarket: 25,
   products: [
     { name: "Premium Groundnut Seeds", href: "/seeds" },
     { name: "Hybrid Groundnut Seeds", href: "/seeds" },
   ],
-  audiences: ["Farmers", "Dealers", "Distributors", "Bulk purchasers"],
+  audiences: ["Farmers", "Retailers", "Dealers", "Distributors", "Bulk purchasers"],
+  leadership: [
+    { name: "Mr Yogesh Bhalodi", role: "Managing Director" },
+    { name: "Mr Het Bhalodi", role: "Chief Executive Officer" },
+  ],
   contact: {
     phoneDisplay: "+91 7016017561",
-    phoneHref: "tel:+917016017561",
+    phoneHref: `tel:${PHONE_E164}`,
+    whatsappHref: `https://wa.me/${PHONE_E164.slice(1)}?text=${encodeURIComponent(WHATSAPP_GREETING)}`,
     email: "peanutagriseeds@gmail.com",
     emailHref: "mailto:peanutagriseeds@gmail.com",
     factory: {

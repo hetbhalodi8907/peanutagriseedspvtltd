@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand/BrandLogo";
-import { MailIcon, MapPinIcon, PhoneIcon } from "@/components/icons";
+import { ArrowRightIcon, ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from "@/components/icons";
 import { Container } from "@/components/ui/Container";
 import { mainNav, siteConfig } from "@/config/site";
 import { breakableEmail } from "@/lib/breakable-email";
+import { hoursSummary } from "@/lib/business-hours";
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return <h2 className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-gold-400">{children}</h2>;
@@ -78,6 +79,23 @@ export function SiteFooter() {
                 <MailIcon className="mt-0.5 size-4 shrink-0 text-gold-400" />
                 <span>{breakableEmail(contact.email)}</span>
               </a>
+            </li>
+            {/* Same central schedule as the Contact page (siteConfig.factoryHours). */}
+            <li className="flex gap-3 text-cream/75">
+              <ClockIcon className="mt-0.5 size-4 shrink-0 text-gold-400" />
+              <span className="leading-relaxed">
+                {hoursSummary({ short: true }).map((row) => (
+                  <span key={row.days} className="block">
+                    {row.days}: {row.hours}
+                  </span>
+                ))}
+              </span>
+            </li>
+            <li>
+              <Link href="/contact" className="inline-flex items-center gap-2 text-sm font-semibold text-gold-400 hover:underline">
+                Contact &amp; directions
+                <ArrowRightIcon className="size-3.5" />
+              </Link>
             </li>
           </ul>
         </div>

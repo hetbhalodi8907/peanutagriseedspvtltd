@@ -44,6 +44,9 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 | `src/middleware.ts` | Redirects any URL containing capital letters to lowercase (308). See Gotchas. |
 | `src/app/{quality,dealer-enquiry}` | Routes that still render `UpcomingSection` placeholders. Replace each when its module is built. |
 | `src/app/api/enquiry/route.ts`, `src/lib/enquiry/` | Enquiry endpoint and its validation, email, Resend and rate-limit modules. See the email setup guide. |
+| `src/content/contact.ts` | Contact page copy (hero, hours, location, explore links). |
+| `src/lib/business-hours.ts` | Formats `siteConfig.factoryHours` for the Contact page, the footer and the structured data. |
+| `src/components/sections/contact/` | Contact page sections: `ContactHero`, `ContactActionList`, `FactoryHours`, `FactoryLocation`, `ContactExplore`, `LocalBusinessJsonLd`, plus `EnquiryForm`. |
 | `src/components/sections/contact/EnquiryForm.tsx` | The enquiry form on `/contact` (`?variety=<name or slug>` preselects a variety). |
 | `docs/INQUIRY-EMAIL-SETUP.md` | Email provider, environment variables, deployment, live-delivery check, troubleshooting. |
 | `docs/IMAGE-CREDITS.md` | Source and licence for every photograph. |
@@ -72,6 +75,13 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 - **Hosting:** the site now has one server route (`/api/enquiry`), so it must be hosted with a Node server or serverless functions, not a static export. All pages remain statically generated.
 - **Shared validation:** the browser form and the server use the same rules (`src/lib/enquiry/schema.ts`). The variety dropdown and server validation both come from `seedVarietyOptions` in `src/content/seeds.ts`.
 - **Variety links:** variety pages link to `/contact?variety=<slug>`; `seedEnquiryHref()` builds the URL.
+
+## Contact page notes (Phase 7)
+
+- **Factory hours** live only in `siteConfig.factoryHours` (Monday–Saturday 08:00–20:00, Sunday 09:00–14:00, IST). The Contact page table, the hero's "At a glance" panel, the footer summary and the LocalBusiness JSON-LD all read from it, so they cannot drift. Each day appears in exactly one entry. There is deliberately no "Open now" indicator.
+- **Location:** "Find Us on Google Maps" uses `factoryMapsHref`, a Maps *address search* built from the exact supplied address. There are no coordinates or pin, because none have been verified against the premises, and no embedded map (it would load third-party scripts and cookies). If the company later confirms an exact Maps place, replace the link in `site.ts`.
+- **Page order:** hero → enquiry form (`#enquiry`) with direct contact actions → hours (`#hours`) → location (`#location`) → Continue Exploring. Variety pages link to `/contact?variety=<slug>#enquiry`; the anchor id is `ENQUIRY_ANCHOR` in `site.ts`.
+- **Structured data:** the JSON-LD has no `url`/`logo` yet; add them once the production domain is known (SEO phase).
 
 ## Gotchas
 

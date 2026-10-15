@@ -36,8 +36,18 @@ export const siteConfig = {
       locality: "Sondarada",
       region: "Gujarat",
       country: "India",
+      countryCode: "IN",
     },
   },
+  /**
+   * Factory opening hours (24-hour "HH:MM", India Standard Time).
+   * Each day appears in exactly one entry, so the Sunday schedule can't be overwritten by Monday–Saturday.
+   * Read through src/lib/business-hours.ts (Contact page, footer and structured data all use it).
+   */
+  factoryHours: [
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "08:00", closes: "20:00" },
+    { days: ["Sunday"], opens: "09:00", closes: "14:00" },
+  ],
   logo: {
     src: "/brand/peanut-agri-seeds-logo.png",
     width: 1254,
@@ -52,6 +62,9 @@ export type NavItem = {
   /** Rendered as the highlighted call-to-action button on desktop. */
   isCta?: boolean;
 };
+
+/** Id of the enquiry form section on /contact (hero CTA and variety-page links scroll to it). */
+export const ENQUIRY_ANCHOR = "enquiry";
 
 export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
@@ -68,3 +81,9 @@ export const factoryAddressLine = [
   siteConfig.contact.factory.region,
   siteConfig.contact.factory.country,
 ].join(", ");
+
+/**
+ * Google Maps search for the supplied address (official Maps URLs API).
+ * Address search only: no coordinates or pin are claimed, since none have been verified.
+ */
+export const factoryMapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(factoryAddressLine)}`;

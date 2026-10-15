@@ -1,54 +1,92 @@
 import type { Metadata } from "next";
+import { ContactActionList } from "@/components/sections/contact/ContactActionList";
+import { ContactExplore } from "@/components/sections/contact/ContactExplore";
+import { ContactHero } from "@/components/sections/contact/ContactHero";
 import { EnquiryForm } from "@/components/sections/contact/EnquiryForm";
-import { ContactDetails } from "@/components/sections/ContactDetails";
-import { PageHero } from "@/components/sections/PageHero";
+import { FactoryHours } from "@/components/sections/contact/FactoryHours";
+import { FactoryLocation } from "@/components/sections/contact/FactoryLocation";
+import { LocalBusinessJsonLd } from "@/components/sections/contact/LocalBusinessJsonLd";
+import { ClockIcon, MapPinIcon } from "@/components/icons";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { siteConfig } from "@/config/site";
+import { ENQUIRY_ANCHOR, factoryAddressLine, siteConfig } from "@/config/site";
+import { contactActionsCopy, enquirySection } from "@/content/contact";
 import { seedVarietyOptions } from "@/content/seeds";
+import { hoursSummary } from "@/lib/business-hours";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description: `Enquire about groundnut seed varieties from ${siteConfig.name} Send an enquiry, call, WhatsApp or email our team.`,
+  // Absolute: the default " | PEANUT AGRI SEEDS PVT. LTD." suffix would repeat the name.
+  title: { absolute: `Contact ${siteConfig.name} | Groundnut Seeds Gujarat` },
+  description: `Contact ${siteConfig.name} for groundnut seed enquiries, factory location, opening hours, and business contact information in Sondarada, Gujarat.`,
 };
 
-// The page stays statically generated; the form posts to /api/enquiry.
-// ?variety=<name or slug> preselects a variety in the browser.
+// Statically generated; the enquiry form posts to /api/enquiry.
+// ?variety=<name or slug> preselects a variety; #enquiry scrolls to the form.
 export default function ContactPage() {
   return (
     <>
-      <PageHero eyebrow="Contact Us" title="Let's Grow Together.">
-        <p>
-          Looking for premium groundnut seed varieties for your farming or business requirements? Share your enquiry with{" "}
-          {siteConfig.name} Our team can use your details to understand your requirements and respond through the appropriate
-          available contact channel.
-        </p>
-        <p className="mt-6 flex items-center gap-4 font-display text-xl italic text-gold-400">
-          <span aria-hidden="true" className="h-px w-10 bg-gold-400" />
-          {siteConfig.tagline}
-        </p>
-      </PageHero>
+      <ContactHero />
 
-      <section aria-labelledby="enquiry-heading" className="bg-cream py-16 sm:py-20 lg:py-24">
+      <section
+        id={ENQUIRY_ANCHOR}
+        aria-labelledby="enquiry-heading"
+        className="scroll-mt-20 bg-cream py-16 sm:py-20 lg:scroll-mt-24 lg:py-24"
+      >
         <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
-            <Eyebrow>Enquiry Form</Eyebrow>
-            <h2 id="enquiry-heading" className="mt-5 text-balance font-display text-[2.1rem] font-semibold leading-tight text-forest-900 sm:text-[2.6rem]">
-              Enquire About Our Groundnut Seeds
+            <Eyebrow>{enquirySection.eyebrow}</Eyebrow>
+            <h2
+              id="enquiry-heading"
+              className="mt-5 text-balance font-display text-[2.1rem] font-semibold leading-tight text-forest-900 sm:text-[2.6rem]"
+            >
+              {enquirySection.title}
             </h2>
-            <p className="mt-4 max-w-xl leading-relaxed text-charcoal/75">
-              Tell us what you need and our team will review your requirements.
-            </p>
+            <p className="mt-4 max-w-xl leading-relaxed text-charcoal/75">{enquirySection.lede}</p>
             <div className="mt-9 rounded-sm border border-forest-900/10 bg-white p-6 shadow-[0_24px_60px_-40px_rgb(23_59_42/0.45)] sm:p-9">
               <EnquiryForm varieties={seedVarietyOptions} />
             </div>
           </div>
 
-          <aside className="lg:col-span-5 lg:pt-[7.25rem]">
-            <ContactDetails title="Prefer to talk?" showWhatsApp className="lg:sticky lg:top-32" />
+          <aside aria-labelledby="talk-heading" className="lg:col-span-5 lg:pt-[7.25rem]">
+            <div className="lg:sticky lg:top-32">
+              <h2 id="talk-heading" className="font-display text-3xl font-semibold text-forest-900">
+                {contactActionsCopy.title}
+              </h2>
+              <p className="mt-3 leading-relaxed text-charcoal/70">{contactActionsCopy.lede}</p>
+              <div className="mt-6">
+                <ContactActionList />
+              </div>
+              <div className="mt-6 space-y-4 border-t border-forest-900/10 pt-6 text-sm">
+                <p className="flex gap-3 text-charcoal/80">
+                  <MapPinIcon className="mt-0.5 size-4 shrink-0 text-gold-700" />
+                  <span>
+                    <span className="block font-semibold text-forest-900">Factory</span>
+                    {factoryAddressLine}
+                  </span>
+                </p>
+                <div className="flex gap-3 text-charcoal/80">
+                  <ClockIcon className="mt-0.5 size-4 shrink-0 text-gold-700" />
+                  <div>
+                    <p className="font-semibold text-forest-900">Factory hours</p>
+                    <ul>
+                      {hoursSummary().map((row) => (
+                        <li key={row.days}>
+                          {row.days}: {row.hours}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </aside>
         </Container>
       </section>
+
+      <FactoryHours />
+      <FactoryLocation />
+      <ContactExplore />
+      <LocalBusinessJsonLd />
     </>
   );
 }

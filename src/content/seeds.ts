@@ -7,7 +7,7 @@
  * byte-for-byte unaltered in src/assets/images/seeds/.
  */
 import type { StaticImageData } from "next/image";
-import { siteConfig } from "@/config/site";
+import { ENQUIRY_ANCHOR, siteConfig } from "@/config/site";
 import g20 from "@/assets/images/seeds/g20.png";
 import g22 from "@/assets/images/seeds/g22.png";
 import girnar4 from "@/assets/images/seeds/girnar-4.png";
@@ -67,8 +67,8 @@ export function getSeedVariety(slug: string) {
 
 export const seedHref = (seed: Pick<SeedVariety, "slug">) => `/seeds/${seed.slug}`;
 
-/** Contact page with this variety preselected in the enquiry form. */
-export const seedEnquiryHref = (seed: Pick<SeedVariety, "slug">) => `/contact?variety=${seed.slug}`;
+/** Contact page with this variety preselected, scrolled to the enquiry form. */
+export const seedEnquiryHref = (seed: Pick<SeedVariety, "slug">) => `/contact?variety=${seed.slug}#${ENQUIRY_ANCHOR}`;
 
 /** Name/slug pairs for the enquiry form dropdown and server-side validation (no image data). */
 export const seedVarietyOptions = seedVarieties.map(({ slug, name }) => ({ slug, name }));

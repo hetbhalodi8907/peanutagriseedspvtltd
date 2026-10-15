@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  --color-forest-950: #0f2a1d;
+  --color-forest-900: #173b2a; /* Deep Forest Green */
+  --color-forest-800: #1f4a33;
+  --color-forest-700: #28563a; /* Rich Agricultural Green */
+  --color-gold-200: #efe3c2;
+  --color-gold-400: #d9bd79; /* Elegant Soft Gold — use on dark surfaces */
+  --color-gold-600: #a88a45;
+  --color-gold-700: #7c6428; /* Gold for text on light surfaces (AA contrast) */
+  --color-cream: #f7f4eb; /* Warm Cream */
+  --color-paper: #fef8ef; /* Matches the logo artwork background exactly */
+  --color-charcoal: #252923;
+
+  --ease-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* `clip` (not `hidden`) so sticky positioning keeps working. */
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-400);
+    color: var(--color-forest-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-600);
+    outline-offset: 3px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Brand intro                                                         */
+/*                                                                     */
+/* The whole sequence is pure CSS so it finishes — and the overlay     */
+/* hides itself — even if JavaScript is slow or fails. JS only adds    */
+/* "play once per session", the skip control and DOM removal.          */
+/* ------------------------------------------------------------------ */
+
+.brand-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 42%, rgb(40 86 58 / 0.55), transparent 70%),
+    var(--color-forest-900);
+  color: var(--color-cream);
+  animation: intro-exit 650ms var(--ease-premium) 2900ms forwards;
+}
+
+.brand-intro[data-state="leaving"] {
+  animation: intro-exit 380ms var(--ease-premium) forwards;
+}
+
+.brand-intro__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.brand-intro__emblem {
+  position: relative;
+  width: clamp(150px, 42vw, 216px);
+  aspect-ratio: 1;
+}
+
+.brand-intro__ring {
+  position: absolute;
+  inset: -12px;
+  border: 1px solid rgb(217 189 121 / 0.55);
+  border-radius: 34px;
+  opacity: 0;
+  animation: intro-ring 1100ms var(--ease-premium) 450ms forwards;
+}
+
+.brand-intro__plate {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: var(--color-paper);
+  box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.45);
+  opacity: 0;
+  animation: intro-plate 1000ms var(--ease-premium) 100ms forwards;
+}
+
+.brand-intro__name {
+  margin-top: 2.5rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.8rem, 3.4vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--color-cream);
+  opacity: 0;
+  animation: intro-name 800ms var(--ease-premium) 950ms forwards;
+}
+
+.brand-intro__rule {
+  display: block;
+  width: 64px;
+  height: 1px;
+  margin: 1.1rem 0;
+  background-color: var(--color-gold-400);
+  transform: scaleX(0);
+  animation: intro-rule 650ms var(--ease-premium) 1350ms forwards;
+}
+
+.brand-intro__tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.35rem, 5vw, 1.9rem);
+  font-weight: 500;
+  color: var(--color-gold-400);
+  opacity: 0;
+  animation: intro-rise 800ms var(--ease-premium) 1550ms forwards;
+}
+
+.brand-intro__skip {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgb(247 244 235 / 0.25);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(247 244 235 / 0.8);
+  opacity: 0;
+  transition:
+    border-color 200ms,
+    color 200ms;
+  animation: intro-fade 500ms ease 700ms forwards;
+}
+
+.brand-intro__skip:hover {
+  border-color: var(--color-gold-400);
+  color: var(--color-gold-400);
+}
+
+@keyframes intro-plate {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes intro-ring {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes intro-name {
+  from {
+    opacity: 0;
+    letter-spacing: 0.42em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.22em;
+  }
+}
+
+@keyframes intro-rule {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes intro-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-exit {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Returning visitors in the same session never see the overlay. */
+html[data-intro="seen"] .brand-intro {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Page entrance — staggered children of `.reveal`                     */
+/* While the intro plays, the entrance waits until the overlay lifts.  */
+/* ------------------------------------------------------------------ */
+
+html[data-intro="play"] {
+  --intro-offset: 2850ms;
+}
+
+.reveal > * {
+  animation: reveal-rise 900ms var(--ease-premium) both;
+  animation-delay: calc(var(--intro-offset, 0ms) + var(--i, 0) * 110ms);
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile navigation sheet                                             */
+/* ------------------------------------------------------------------ */
+
+.nav-sheet {
+  animation: intro-fade 220ms ease forwards;
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion: no intro, no movement.                              */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-intro {
+    display: none;
+  }
+
+  .reveal > *,
+  .nav-sheet {
+    animation: none;
+    opacity: 1;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

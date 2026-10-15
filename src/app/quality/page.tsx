@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Quality",
-  description: `Seed quality at ${siteConfig.name}.`,
+  description: `Seed quality at ${siteConfig.name}`,
 };
 
 export default function QualityPage() {

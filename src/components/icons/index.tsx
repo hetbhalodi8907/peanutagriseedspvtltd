@@ -103,6 +103,16 @@ export function DetailIcon(props: IconProps) {
   );
 }
 
+/** Two speech bubbles — communication and relationships. */
+export function ConversationIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M14 9.5V5.8A1.8 1.8 0 0 0 12.2 4H4.8A1.8 1.8 0 0 0 3 5.8v5a1.8 1.8 0 0 0 1.8 1.8H6v2.6l3-2.6h1" />
+      <path d="M10 11.8a1.8 1.8 0 0 1 1.8-1.8h7.4a1.8 1.8 0 0 1 1.8 1.8v4.4a1.8 1.8 0 0 1-1.8 1.8H18v2.5L15 18h-3.2a1.8 1.8 0 0 1-1.8-1.8Z" />
+    </Icon>
+  );
+}
+
 export function WhatsAppIcon(props: IconProps) {
   return (
     <Icon {...props}>

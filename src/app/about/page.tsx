@@ -1,29 +1,31 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
-import { UpcomingSection } from "@/components/sections/UpcomingSection";
+import { AboutContact } from "@/components/sections/about/AboutContact";
+import { AboutHero } from "@/components/sections/about/AboutHero";
+import { ApproachSection } from "@/components/sections/about/ApproachSection";
+import { BrandStatement } from "@/components/sections/about/BrandStatement";
+import { CompanyStory } from "@/components/sections/about/CompanyStory";
+import { LeadershipBridge } from "@/components/sections/about/LeadershipBridge";
+import { LeadershipProfiles } from "@/components/sections/about/LeadershipProfiles";
 import { siteConfig } from "@/config/site";
+
+const [md, ceo] = siteConfig.leadership;
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: `About ${siteConfig.name} — ${siteConfig.yearsInMarket} years of market presence in groundnut seeds.`,
+  description: `About ${siteConfig.name}: ${siteConfig.yearsInMarket} years in the agricultural market, led by ${md.role} ${md.name} and ${ceo.role} ${ceo.name}.`,
 };
 
+// Page copy lives in src/content/about.ts; company facts in src/config/site.ts.
 export default function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="About Us" title={`${siteConfig.yearsInMarket} years rooted in agriculture`}>
-        <p>
-          {siteConfig.name} specialises in premium groundnut seeds and hybrid groundnut seeds, with a factory on the{" "}
-          {siteConfig.contact.factory.street} at {siteConfig.contact.factory.locality}, {siteConfig.contact.factory.region}.
-        </p>
-      </PageHero>
-      <UpcomingSection
-        planned={[
-          "Our company story and journey in agricultural seeds",
-          "Leadership profiles of our Managing Director and CEO",
-          "Our factory at Sondarada, Gujarat",
-        ]}
-      />
+      <AboutHero />
+      <CompanyStory />
+      <LeadershipProfiles />
+      <LeadershipBridge />
+      <ApproachSection />
+      <BrandStatement />
+      <AboutContact />
     </>
   );
 }

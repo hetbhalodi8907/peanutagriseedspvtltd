@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Dealer Enquiry",
-  description: `Dealer, distributor and bulk purchase enquiries for ${siteConfig.name}.`,
+  description: `Dealer, distributor and bulk purchase enquiries for ${siteConfig.name}`,
 };
 
 export default function DealerEnquiryPage() {

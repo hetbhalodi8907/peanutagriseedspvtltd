@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Our Seeds",
-  description: `Premium groundnut seeds and hybrid groundnut seeds from ${siteConfig.name}.`,
+  description: `Premium groundnut seeds and hybrid groundnut seeds from ${siteConfig.name}`,
 };
 
 export default function SeedsPage() {

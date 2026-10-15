@@ -22,8 +22,8 @@ export const siteConfig = {
   ],
   audiences: ["Farmers", "Retailers", "Dealers", "Distributors", "Bulk purchasers"],
   leadership: [
-    { name: "Mr Yogesh Bhalodi", role: "Managing Director" },
-    { name: "Mr Het Bhalodi", role: "Chief Executive Officer" },
+    { id: "md", name: "Mr Yogesh Bhalodi", role: "Managing Director", roleShort: "MD" },
+    { id: "ceo", name: "Mr Het Bhalodi", role: "Chief Executive Officer", roleShort: "CEO" },
   ],
   contact: {
     phoneDisplay: "+91 7016017561",

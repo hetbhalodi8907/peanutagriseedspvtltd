@@ -102,7 +102,7 @@ export async function POST(request: Request) {
 
   if (!sent.ok) {
     if (submissionKey) submissions.delete(submissionKey); // allow a genuine retry
-    log("enquiry_failed", { reference, kind: sent.kind, status: sent.status });
+    log("enquiry_failed", { reference, kind: sent.kind, status: sent.status, providerError: sent.providerError });
     return json(502, { ok: false, error: "delivery_failed" });
   }
 

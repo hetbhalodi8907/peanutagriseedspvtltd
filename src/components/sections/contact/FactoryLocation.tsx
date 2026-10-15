@@ -31,7 +31,7 @@ export function FactoryLocation() {
               <span className="sr-only"> (opens Google Maps in a new tab)</span>
             </a>
           </div>
-          <p className="mt-3 text-xs text-charcoal/55">{factoryLocationSection.mapNote}</p>
+          <p className="mt-3 text-xs text-charcoal/70">{factoryLocationSection.mapNote}</p>
           <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <span className="text-charcoal/70">Need help finding us?</span>
             <a href={contact.phoneHref} className="inline-flex items-center gap-2 font-semibold text-forest-900 hover:underline">

@@ -4,7 +4,13 @@ import type { EnquiryEmail } from "./email";
 
 export type SendResult =
   | { ok: true; providerId: string | null }
-  | { ok: false; kind: "auth" | "rejected" | "rate_limited" | "unavailable" | "network"; status?: number };
+  | {
+      ok: false;
+      kind: "auth" | "rejected" | "rate_limited" | "unavailable" | "network";
+      status?: number;
+      /** Resend's error name and message, for server logs only; never sent to the browser. */
+      providerError?: string;
+    };
 
 /**
  * Sends one email through the Resend REST API (https://resend.com/docs/api-reference/emails/send-email).
@@ -46,8 +52,17 @@ export async function sendWithResend(
   }
 
   const status = response.status;
-  if (status === 401 || status === 403) return { ok: false, kind: "auth", status };
-  if (status === 429) return { ok: false, kind: "rate_limited", status };
-  if (status >= 500) return { ok: false, kind: "unavailable", status };
-  return { ok: false, kind: "rejected", status }; // e.g. 422 unverified sender domain
+  // Resend errors look like { name: "validation_error", message: "..." }. Its 403s are usually
+  // sender restrictions (unverified domain, or the shared test sender used for a recipient
+  // other than the account owner), not bad keys, so keep its explanation for diagnosis.
+  const error = (await response.json().catch(() => null)) as { name?: unknown; message?: unknown } | null;
+  const providerError = [error?.name, error?.message]
+    .filter((part): part is string => typeof part === "string")
+    .join(": ")
+    .slice(0, 300) || undefined;
+
+  if (status === 401) return { ok: false, kind: "auth", status, providerError };
+  if (status === 429) return { ok: false, kind: "rate_limited", status, providerError };
+  if (status >= 500) return { ok: false, kind: "unavailable", status, providerError };
+  return { ok: false, kind: "rejected", status, providerError }; // 403/422: sender/domain/key restrictions
 }

@@ -37,7 +37,7 @@ export function ContactActionList() {
               <span className="mt-0.5 block font-semibold text-forest-900 [overflow-wrap:anywhere] transition-colors group-hover:text-cream">
                 {breakableEmail(value)}
               </span>
-              <span className="mt-0.5 block text-xs text-charcoal/60 transition-colors group-hover:text-cream/70">
+              <span className="mt-0.5 block text-xs text-charcoal/70 transition-colors group-hover:text-cream/70">
                 {hint}
                 {external && <span className="sr-only"> (opens in a new tab)</span>}
               </span>

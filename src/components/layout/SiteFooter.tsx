@@ -104,7 +104,10 @@ export function SiteFooter() {
       <div className="border-t border-cream/10">
         <Container className="flex flex-col gap-2 py-6 text-xs text-cream/55 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {siteConfig.name} All rights reserved.
+            © {year} {siteConfig.name} All rights reserved.{" "}
+            <Link href="/privacy" className="ml-2 inline-block py-1 text-cream/70 underline-offset-4 hover:text-gold-400 hover:underline">
+              Privacy Notice
+            </Link>
           </p>
           <p className="font-display text-sm italic text-cream/60">{siteConfig.tagline}</p>
         </Container>

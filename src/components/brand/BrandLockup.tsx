@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { BrandLogo } from "./BrandLogo";
 
@@ -15,7 +14,6 @@ export function BrandLockup({ tone = "dark", className, onNavigate }: BrandLocku
     <Link
       href="/"
       onClick={onNavigate}
-      aria-label={`${siteConfig.name} — Home`}
       className={cn("group flex min-w-0 items-center gap-3 sm:gap-4", className)}
     >
       <span className="shrink-0 overflow-hidden rounded-lg bg-paper">
@@ -38,6 +36,8 @@ export function BrandLockup({ tone = "dark", className, onNavigate }: BrandLocku
         >
           PVT. LTD.
         </span>
+        {/* Accessible name = visible text + "home" (WCAG 2.5.3 label in name). */}
+        <span className="sr-only"> — home</span>
       </span>
     </Link>
   );

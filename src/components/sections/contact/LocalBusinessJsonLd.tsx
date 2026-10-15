@@ -1,9 +1,9 @@
 import { siteConfig } from "@/config/site";
+import { absoluteUrl, siteUrl } from "@/lib/seo";
 
 /**
  * schema.org LocalBusiness data for the Contact page, using verified details only:
- * no street number, coordinates, ratings or reviews. (A `url`/`logo` can be added
- * once the production domain is known.)
+ * no street number, postal code, coordinates, ratings or reviews.
  */
 export function LocalBusinessJsonLd() {
   const { contact } = siteConfig;
@@ -12,6 +12,8 @@ export function LocalBusinessJsonLd() {
     "@type": "LocalBusiness",
     name: siteConfig.name,
     slogan: siteConfig.tagline,
+    // Website URL and logo only once the real domain is configured (SITE_URL).
+    ...(siteUrl ? { url: siteUrl.origin, logo: absoluteUrl(siteConfig.logo.src), image: absoluteUrl(siteConfig.logo.src) } : {}),
     telephone: contact.phoneHref.replace(/^tel:/, ""),
     email: contact.email,
     address: {

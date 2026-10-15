@@ -84,7 +84,7 @@ function Profile({ leader, variant, className }: ProfileProps) {
         </div>
 
         <div className="mt-9 max-w-2xl border-t border-forest-900/10 pt-6">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-charcoal/60">Areas of focus</p>
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-charcoal/70">Areas of focus</p>
           <ul className="mt-4 flex flex-wrap gap-x-7 gap-y-3">
             {leader.focus.map((item) => (
               <li key={item} className="flex items-center gap-3 font-semibold text-forest-900">

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { ArrowRightIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { buttonClasses } from "@/components/ui/Button";
@@ -359,9 +360,12 @@ export function EnquiryForm({ varieties }: { varieties: VarietyOption[] }) {
       </div>
 
       <div className="flex flex-col gap-4 border-t border-forest-900/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-relaxed text-charcoal/60 sm:max-w-xs">
+        <p className="text-xs leading-relaxed text-charcoal/70 sm:max-w-xs">
           <span aria-hidden="true">*</span> Required fields. Your details are emailed to our team only to respond to this enquiry
-          and are not stored on this website.
+          and are not stored on this website.{" "}
+          <Link href="/privacy" className="font-semibold text-forest-900 underline underline-offset-4">
+            Privacy Notice
+          </Link>
         </p>
         <button
           type="submit"
@@ -446,7 +450,7 @@ function Field({
       </label>
       <div className="mt-2">{children}</div>
       {hint && (
-        <p id={`${id}-hint`} className="mt-2 text-xs text-charcoal/60">
+        <p id={`${id}-hint`} className="mt-2 text-xs text-charcoal/70">
           {hint}
         </p>
       )}

@@ -47,6 +47,7 @@ Set these in the hosting provider's environment settings. For local work, put th
 | `RESEND_API_KEY` | Yes | API key from Resend → API Keys. Use "Sending access" only. |
 | `INQUIRY_FROM_EMAIL` | Yes | Sender on a verified domain, e.g. `PEANUT AGRI SEEDS Website <enquiries@yourdomain.com>` |
 | `INQUIRY_TO_EMAIL` | Recommended | `peanutagriseeds@gmail.com`. **Any other value is rejected** and the form returns "could not send". If unset, it defaults to this address. |
+| `TRUSTED_PROXY_HOPS` | If not 1 | Number of proxies that append to `X-Forwarded-For` (default 1: Vercel or one reverse proxy; 2: CDN + reverse proxy). Used to identify visitors for rate limiting. |
 | `RESEND_API_BASE_URL` | No | Testing only: points the server at a local mock provider. Leave unset in production. |
 
 Never commit real values. Never prefix these with `NEXT_PUBLIC_`, which would expose them to the browser.
@@ -83,7 +84,8 @@ npm run dev                  # http://localhost:3000/contact
 
 - **Hosting:** the site must run with a Node.js server (`next start`) or on a platform with Next.js serverless functions (e.g. Vercel, Netlify, AWS Amplify). A pure static export would drop `/api/enquiry`.
 - **Secrets:** add the environment variables in the host's secret settings, then redeploy so the server picks them up.
-- **Proxy:** put the server behind HTTPS and a proxy/CDN that sets `X-Forwarded-For` to the visitor's IP; rate limiting relies on it (see Limitations).
+- **Proxy:** put the server behind HTTPS and a proxy/CDN that sets `X-Forwarded-For`, and set `TRUSTED_PROXY_HOPS` to the number of proxies; rate limiting relies on it (see Limitations).
+- **Full launch checklist:** [LAUNCH-READINESS.md](LAUNCH-READINESS.md).
 - **Key rotation:** rotate the API key in Resend if it is ever exposed, and update the environment variable.
 
 ## 7. Responses and troubleshooting
@@ -93,8 +95,8 @@ npm run dev                  # http://localhost:3000/contact
 | Success with reference | 200 | `enquiry_sent` | Resend accepted the email. If it isn't in the inbox, check Spam and the Resend dashboard. |
 | "Please correct the highlighted fields" | 400 | — | Invalid input. Each field shows its own message. |
 | "Could not send… call or WhatsApp" | 503 | `enquiry_not_configured` (lists problems) | A variable is missing or invalid, or `INQUIRY_TO_EMAIL` is not peanutagriseeds@gmail.com. Set it and redeploy. |
-| Same | 502 | `enquiry_failed` with `kind: auth` | API key wrong or revoked. Create a new key and update `RESEND_API_KEY`. |
-| Same | 502 | `kind: rejected` (status 422/400) | Sender domain not verified, or `onboarding@resend.dev` used to reach a different address. Verify the domain (step 3). |
+| Same | 502 | `enquiry_failed` with `kind: auth` (status 401) | API key wrong or revoked. Create a new key and update `RESEND_API_KEY`. |
+| Same | 502 | `kind: rejected` (status 403/422/400); `providerError` gives Resend's reason | **403** usually means a sender restriction: `onboarding@resend.dev` can only deliver to the email address that owns the Resend account, or the API key is limited to a domain other than the sender's. Verify a domain and use it as the sender (step 3), or create the Resend account with peanutagriseeds@gmail.com. **422** means the sender domain is not verified. |
 | Same | 502 | `kind: rate_limited` | Resend account sending limit reached. Wait, or upgrade the Resend plan. |
 | Same | 502 | `kind: network` / `unavailable` | Resend unreachable, timed out (10 s), or down. Check the host's outbound network and status.resend.com. |
 | "Several enquiries in a short time" | 429 | — | Per-client or global limit reached. Wait 10 minutes. |
@@ -103,7 +105,7 @@ npm run dev                  # http://localhost:3000/contact
 ## 8. Limitations
 
 - **Rate limits are per server process (in memory).** They work for a single `next start` instance. On serverless or multi-instance hosting, each instance keeps separate counters, which reset on cold start. For strict limits, back them with a shared store (e.g. Upstash Redis).
-- **Client identity comes from `X-Forwarded-For`.** If `next start` is exposed directly without a proxy, clients can forge this header to dodge the per-client limit. The global cap (100 enquiries per 10 minutes) still applies.
+- **Client identity comes from `X-Forwarded-For`.** Since Phase 8 the right-most trusted entry is used (`TRUSTED_PROXY_HOPS`), so forged left-hand entries are ignored. If `next start` is exposed directly with no proxy, the whole header is client-controlled. Always deploy behind a proxy; the global cap (100 enquiries per 10 minutes) remains the backstop.
 - **Duplicate tracking is also in memory.** Across instances, Resend's own idempotency key still prevents duplicate emails for 24 hours.
 - **The honeypot and minimum fill time stop simple bots, not determined attackers.** If spam becomes a problem, add a CAPTCHA such as Cloudflare Turnstile (privacy-friendly, mostly invisible).
 - **No automatic reply to customers,** because the form does not collect customer email addresses. The company replies by phone or WhatsApp.

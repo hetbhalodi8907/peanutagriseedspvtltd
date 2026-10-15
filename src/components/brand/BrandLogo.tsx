@@ -47,6 +47,7 @@ export function BrandLogo({ className, sizes, priority, alt = siteConfig.logo.al
       alt={alt}
       sizes={sizes}
       priority={priority}
+      fetchPriority={priority ? "high" : undefined}
       onError={() => setFailed(true)}
       className={cn("aspect-square h-auto select-none", className)}
       draggable={false}

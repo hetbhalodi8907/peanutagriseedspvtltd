@@ -44,11 +44,28 @@ export const sendLimiter = new SlidingWindowLimiter(5, TEN_MINUTES);
 export const globalSendLimiter = new SlidingWindowLimiter(100, TEN_MINUTES);
 
 /**
- * Client identity for rate limiting: first x-forwarded-for entry, else x-real-ip.
- * Behind a trusted proxy/CDN this is the visitor's IP. When `next start` is exposed
- * directly, clients can forge x-forwarded-for, which is why the global cap exists.
+ * Number of trusted proxies in front of the app that append to X-Forwarded-For
+ * (TRUSTED_PROXY_HOPS, default 1). The visitor's IP is the entry that many places from
+ * the RIGHT: entries further left were supplied by the client and can be forged.
+ *   Vercel / one reverse proxy (nginx `proxy_add_x_forwarded_for`): 1
+ *   CDN in front of a reverse proxy: 2
  */
-export function clientKey(headers: Headers) {
-  const forwarded = headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || headers.get("x-real-ip")?.trim() || "unknown";
+function trustedProxyHops() {
+  const hops = Number.parseInt(process.env.TRUSTED_PROXY_HOPS ?? "1", 10);
+  return Number.isFinite(hops) && hops >= 1 && hops <= 10 ? hops : 1;
+}
+
+/**
+ * Client identity for rate limiting, from the right-most trusted X-Forwarded-For entry
+ * (else X-Real-IP). Phase 8 fix: previously the left-most entry was used, which a client
+ * could forge even behind a proxy. If `next start` is exposed directly with no proxy, the
+ * whole header is client-controlled; the global send cap remains the backstop.
+ */
+export function clientKey(headers: Headers, hops = trustedProxyHops()) {
+  const chain = (headers.get("x-forwarded-for") ?? "")
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  if (chain.length > 0) return chain[Math.max(0, chain.length - hops)];
+  return headers.get("x-real-ip")?.trim() || "unknown";
 }

@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+
+// Next.js also marks 404 responses noindex.
+export const metadata: Metadata = {
+  title: "Page Not Found",
+  description: "The page you are looking for could not be found.",
+};
 
 export default function NotFound() {
   return (

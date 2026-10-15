@@ -31,7 +31,7 @@ export function ApproachSection() {
                   <span className="flex size-12 items-center justify-center rounded-full bg-forest-900 text-gold-400">
                     <Icon className="size-5" />
                   </span>
-                  <span aria-hidden="true" className="font-display text-3xl font-semibold text-gold-600/70">
+                  <span aria-hidden="true" className="font-display text-3xl font-semibold text-gold-700">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>

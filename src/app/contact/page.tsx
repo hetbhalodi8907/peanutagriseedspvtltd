@@ -13,12 +13,14 @@ import { ENQUIRY_ANCHOR, factoryAddressLine, siteConfig } from "@/config/site";
 import { contactActionsCopy, enquirySection } from "@/content/contact";
 import { seedVarietyOptions } from "@/content/seeds";
 import { hoursSummary } from "@/lib/business-hours";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   // Absolute: the default " | PEANUT AGRI SEEDS PVT. LTD." suffix would repeat the name.
-  title: { absolute: `Contact ${siteConfig.name} | Groundnut Seeds Gujarat` },
+  absoluteTitle: `Contact ${siteConfig.name} | Groundnut Seeds Gujarat`,
   description: `Contact ${siteConfig.name} for groundnut seed enquiries, factory location, opening hours, and business contact information in Sondarada, Gujarat.`,
-};
+  path: "/contact",
+});
 
 // Statically generated; the enquiry form posts to /api/enquiry.
 // ?variety=<name or slug> preselects a variety; #enquiry scrolls to the form.
@@ -47,7 +49,8 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <aside aria-labelledby="talk-heading" className="lg:col-span-5 lg:pt-[7.25rem]">
+          {/* A region, not <aside>: complementary landmarks must not sit inside <main>. */}
+          <section aria-labelledby="talk-heading" data-contact-aside className="lg:col-span-5 lg:pt-[7.25rem]">
             <div className="lg:sticky lg:top-32">
               <h2 id="talk-heading" className="font-display text-3xl font-semibold text-forest-900">
                 {contactActionsCopy.title}
@@ -79,7 +82,7 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-          </aside>
+          </section>
         </Container>
       </section>
 

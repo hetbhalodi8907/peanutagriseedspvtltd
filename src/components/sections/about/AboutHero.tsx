@@ -67,7 +67,7 @@ export function AboutHero() {
                 priority
                 fetchPriority="high"
                 placeholder="blur"
-                sizes="(min-width: 1024px) 38vw, (min-width: 448px) 448px, 100vw"
+                sizes="(min-width: 1024px) 38vw, (min-width: 488px) 448px, calc(100vw - 40px)"
                 className="object-cover object-[46%_55%]"
               />
             </div>

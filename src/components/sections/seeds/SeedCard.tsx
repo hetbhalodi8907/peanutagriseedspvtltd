@@ -20,7 +20,9 @@ export function SeedCard({ seed, number }: SeedCardProps) {
     >
       <PackagingImage
         seed={seed}
-        sizes="(min-width: 1280px) 290px, (min-width: 1024px) 31vw, (min-width: 480px) 46vw, 92vw"
+        // The package (object-contain inside a padded stage) renders at ~65-70% of the card width,
+        // so size the request to the package, not the card (Phase 8 audit: ~2x pixels were fetched).
+        sizes="(min-width: 1280px) 210px, (min-width: 1024px) 22vw, (min-width: 480px) 34vw, 56vw"
         // Square on single-column phones keeps the list compact; 4:5 once cards sit side by side.
         className="aspect-square border-b border-forest-900/8 min-[480px]:aspect-[4/5]"
         imageClassName="p-5 transition-transform duration-500 ease-premium group-hover:-translate-y-1 sm:p-6"
@@ -28,7 +30,7 @@ export function SeedCard({ seed, number }: SeedCardProps) {
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <p className="flex items-center justify-between gap-3 text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-gold-700">
           {seed.descriptor}
-          <span aria-hidden="true" className="tabular-nums text-gold-600">
+          <span aria-hidden="true" className="tabular-nums text-gold-700">
             {String(number).padStart(2, "0")}
           </span>
         </p>

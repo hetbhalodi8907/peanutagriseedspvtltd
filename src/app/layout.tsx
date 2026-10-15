@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { TopBar } from "@/components/layout/TopBar";
 import { siteConfig } from "@/config/site";
+import { siteUrl } from "@/lib/seo";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -29,6 +30,8 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  // Absolute URLs (canonical, og:url, images) resolve against SITE_URL once it is configured.
+  ...(siteUrl ? { metadataBase: siteUrl } : {}),
 };
 
 export const viewport: Viewport = {

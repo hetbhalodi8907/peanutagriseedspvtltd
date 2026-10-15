@@ -128,7 +128,7 @@ export function MobileNav({ items, pathname }: MobileNavProps) {
                         active ? "text-gold-400" : "text-cream hover:text-gold-400",
                       )}
                     >
-                      <span className="w-6 text-xs font-semibold tracking-widest text-gold-400/70">
+                      <span className="w-6 text-xs font-semibold tracking-widest text-gold-400">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <span className="font-display text-[1.75rem] font-semibold leading-tight">{item.label}</span>

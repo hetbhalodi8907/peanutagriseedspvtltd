@@ -12,7 +12,11 @@ npm run dev     # http://localhost:3000 (generates images first)
 npm run build   # generates images, then production build (includes type check + lint)
 npm start
 npm run images  # regenerate responsive images only (incremental)
+npx tsc --noEmit  # type check
+npm run lint      # ESLint
 ```
+
+**Before launching, read [docs/LAUNCH-READINESS.md](docs/LAUNCH-READINESS.md)**: the deployment requirements, environment variables (`SITE_URL`, Resend, `TRUSTED_PROXY_HOPS`), smoke test, rollback and open launch blockers.
 
 The enquiry form needs email settings: copy `.env.example` to `.env.local` and see [docs/INQUIRY-EMAIL-SETUP.md](docs/INQUIRY-EMAIL-SETUP.md). The site works without them, but the form will report that enquiries cannot be sent.
 
@@ -49,6 +53,10 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 | `src/components/sections/contact/` | Contact page sections: `ContactHero`, `ContactActionList`, `FactoryHours`, `FactoryLocation`, `ContactExplore`, `LocalBusinessJsonLd`, plus `EnquiryForm`. |
 | `src/components/sections/contact/EnquiryForm.tsx` | The enquiry form on `/contact` (`?variety=<name or slug>` preselects a variety). |
 | `docs/INQUIRY-EMAIL-SETUP.md` | Email provider, environment variables, deployment, live-delivery check, troubleshooting. |
+| `src/lib/seo.ts` | `SITE_URL` handling and `pageMetadata()` (titles, descriptions, canonical, Open Graph/Twitter) used by every page. |
+| `src/app/robots.ts`, `src/app/sitemap.ts` | `robots.txt` and `sitemap.xml` (the sitemap is empty until `SITE_URL` is set). |
+| `src/app/privacy/page.tsx` | Factual Privacy Notice (owner/legal review pending). |
+| `docs/LAUNCH-READINESS.md` | Phase 8 audit results, launch blockers, deployment checklist, rollback. |
 | `docs/IMAGE-CREDITS.md` | Source and licence for every photograph. |
 
 ## Homepage notes (Phase 2)
@@ -82,6 +90,13 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 - **Location:** "Find Us on Google Maps" uses `factoryMapsHref`, a Maps *address search* built from the exact supplied address. There are no coordinates or pin, because none have been verified against the premises, and no embedded map (it would load third-party scripts and cookies). If the company later confirms an exact Maps place, replace the link in `site.ts`.
 - **Page order:** hero → enquiry form (`#enquiry`) with direct contact actions → hours (`#hours`) → location (`#location`) → Continue Exploring. Variety pages link to `/contact?variety=<slug>#enquiry`; the anchor id is `ENQUIRY_ANCHOR` in `site.ts`.
 - **Structured data:** the JSON-LD has no `url`/`logo` yet; add them once the production domain is known (SEO phase).
+
+## Launch audit notes (Phase 8)
+
+- **Security headers** are set in `next.config.ts` for every response. The CSP is production-only, because `next dev` needs eval, and it allows `'unsafe-inline'` scripts for Next's static-page bootstrap. If you add any external script, font, image or API, extend the CSP or it will be blocked. `X-Powered-By` is disabled.
+- **`SITE_URL`** is read at build time and validated. Without it, the site publishes no canonical or social URLs and an empty sitemap. New pages should export `pageMetadata({ title, description, path })` and be added to `sitemap.ts` if they are not in `mainNav`.
+- **Rate-limit identity** uses the right-most trusted `X-Forwarded-For` entry (`TRUSTED_PROXY_HOPS`).
+- **Image widths** (`image-config.mjs`) now include 480. Catalogue `sizes` describe the rendered package, not the card.
 
 ## Gotchas
 

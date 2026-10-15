@@ -7,7 +7,7 @@ export function TopBar() {
   const { contact, tagline, yearsInMarket } = siteConfig;
 
   return (
-    <div className="bg-forest-950 text-cream/80">
+    <aside aria-label="Company contact information" className="bg-forest-950 text-cream/80">
       <Container className="flex h-9 items-center justify-between gap-4 text-[0.72rem]">
         <p className="truncate">
           <span className="font-display text-sm italic text-gold-400">{tagline}</span>
@@ -35,6 +35,6 @@ export function TopBar() {
           </a>
         </div>
       </Container>
-    </div>
+    </aside>
   );
 }

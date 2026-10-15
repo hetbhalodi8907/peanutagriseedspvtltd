@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
 import { UpcomingSection } from "@/components/sections/UpcomingSection";
 import { siteConfig } from "@/config/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Dealer Enquiry",
-  description: `Dealer, distributor and bulk purchase enquiries for ${siteConfig.name}`,
-};
+  // siteConfig.name already ends with a full stop.
+  description: `Dealer, distributor and bulk purchase enquiries for ${siteConfig.name} Contact our team to discuss groundnut seed varieties and your requirements.`,
+  path: "/dealer-enquiry",
+});
 
 export default function DealerEnquiryPage() {
   return (

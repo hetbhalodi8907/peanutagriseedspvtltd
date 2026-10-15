@@ -80,7 +80,7 @@ export function FactoryHours() {
               </tbody>
             </table>
           </div>
-          <p className="mt-4 text-sm text-charcoal/60">{factoryHoursSection.timezoneNote}</p>
+          <p className="mt-4 text-sm text-charcoal/70">{factoryHoursSection.timezoneNote}</p>
         </div>
       </Container>
     </section>

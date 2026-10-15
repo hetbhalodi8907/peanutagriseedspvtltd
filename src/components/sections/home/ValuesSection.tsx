@@ -18,7 +18,7 @@ export function ValuesSection() {
         <ol className="grid grid-cols-1 gap-px self-start bg-forest-900/10 sm:grid-cols-2 lg:col-span-7">
           {values.items.map((item, index) => (
             <li key={item.title} className="reveal-on-scroll bg-cream py-8 sm:p-8 lg:p-10">
-              <span aria-hidden="true" className="font-display text-5xl font-semibold leading-none text-gold-600/80">
+              <span aria-hidden="true" className="font-display text-5xl font-semibold leading-none text-gold-700">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-6 text-lg font-bold text-forest-900">{item.title}</h3>

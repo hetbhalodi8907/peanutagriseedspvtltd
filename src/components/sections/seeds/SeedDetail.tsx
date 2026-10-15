@@ -101,14 +101,14 @@ export function SeedDetail({ seed }: { seed: SeedVariety }) {
       <nav aria-label="More varieties" className="border-t border-forest-900/10">
         <Container className="grid grid-cols-2 gap-4 py-6 text-sm">
           <Link href={seedHref(previous)} className="group flex flex-col items-start gap-1 text-left">
-            <span className="flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-charcoal/60">
+            <span className="flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-charcoal/70">
               <ArrowLeftIcon className="size-3.5 transition-transform group-hover:-translate-x-0.5" />
               Previous variety
             </span>
             <span className="font-display text-xl font-semibold text-forest-900 lining-nums group-hover:underline">{previous.name}</span>
           </Link>
           <Link href={seedHref(next)} className="group flex flex-col items-end gap-1 text-right">
-            <span className="flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-charcoal/60">
+            <span className="flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-charcoal/70">
               Next variety
               <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
             </span>

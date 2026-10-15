@@ -7,7 +7,7 @@ import { brandStatement } from "@/content/about";
 /** Full-bleed brand statement built around the tagline. */
 export function BrandStatement() {
   return (
-    <section aria-labelledby="purpose-heading" className="relative isolate overflow-hidden bg-forest-950 text-cream">
+    <section aria-label="Our purpose" className="relative isolate overflow-hidden bg-forest-950 text-cream">
       <Image
         src={brandStatement.image.src}
         alt={brandStatement.image.alt}

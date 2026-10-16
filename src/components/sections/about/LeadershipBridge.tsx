@@ -48,7 +48,7 @@ export function LeadershipBridge() {
  */
 const thumbnailCrop = {
   md: { width: 116, left: -22, top: -6 },
-  ceo: { width: 154, left: -52, top: -3 },
+  ceo: { width: 176, left: -68, top: -60 },
 } as const;
 
 function RoleCard({ role }: { role: (typeof leadershipBridge.roles)[number] }) {

@@ -56,8 +56,9 @@
 /* Brand intro                                                         */
 /*                                                                     */
 /* The whole sequence is pure CSS so it finishes — and the overlay     */
-/* hides itself — even if JavaScript is slow or fails. JS only adds    */
-/* "play once per session", the skip control and DOM removal.          */
+/* hides itself — even if JavaScript is slow or fails. It plays on     */
+/* every full page load; JS only adds the skip control, Escape, the    */
+/* reduced-motion check and DOM removal.                               */
 /* ------------------------------------------------------------------ */
 
 .brand-intro {
@@ -232,8 +233,8 @@
   }
 }
 
-/* Returning visitors in the same session never see the overlay. */
-html[data-intro="seen"] .brand-intro {
+/* Reduced-motion visitors (marked by the boot script) never see the overlay. */
+html[data-intro="skip"] .brand-intro {
   display: none;
 }
 

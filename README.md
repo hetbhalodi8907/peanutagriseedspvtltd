@@ -112,8 +112,9 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 
 ## Brand intro behaviour
 
-- Plays once per browser session (`sessionStorage` key `pas-intro-seen`), ~3.5 s, with a Skip button and Escape key.
-- An inline `<head>` script sets `<html data-intro="play|seen">` before first paint, so repeat visits never flash the overlay.
+- Plays on **every full page load**: a new tab, a reload, or a direct visit to any page. It lasts ~3.5 s and has a Skip button and Escape key. No browser storage is used.
+- It does **not** replay on client-side navigation: it lives in the root layout, which stays mounted across route changes.
+- An inline `<head>` script sets `<html data-intro="play|skip">` before first paint (`skip` = the visitor prefers reduced motion).
 - The animation and the overlay's exit are CSS-only, so it hides itself even if JavaScript fails. Without JavaScript it is skipped (`<noscript>`), and it is skipped entirely for `prefers-reduced-motion`.
 
 ## Colour tokens

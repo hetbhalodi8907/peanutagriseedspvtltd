@@ -3,15 +3,15 @@
 import { useCallback, useEffect, useState, type AnimationEvent } from "react";
 import { siteConfig } from "@/config/site";
 import { BrandLogo } from "./BrandLogo";
-import { INTRO_STORAGE_KEY } from "./intro-script";
 
 /** Overlay exit ends at 2900ms + 650ms (see globals.css); remove it shortly after regardless. */
 const SAFETY_UNMOUNT_MS = 4200;
 const SKIP_FADE_MS = 400;
 
 /**
- * Animated company introduction shown once per browser session.
- * Rendered in the root layout, so client-side route changes never replay it.
+ * Animated company introduction, played on every full page load (new tab, reload).
+ * Rendered in the root layout, which stays mounted across client-side route changes,
+ * so navigating within the site never replays it. No browser storage is used.
  */
 export function BrandIntro() {
   const [visible, setVisible] = useState(true);
@@ -31,15 +31,10 @@ export function BrandIntro() {
 
   useEffect(() => {
     const root = document.documentElement;
-    if (root.getAttribute("data-intro") === "seen") {
+    // Reduced-motion visitors: the boot script marked the page "skip" and CSS hides the intro.
+    if (root.getAttribute("data-intro") === "skip") {
       setVisible(false);
       return;
-    }
-
-    try {
-      sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
-    } catch {
-      // Storage unavailable (private mode etc.) — the intro simply plays again next load.
     }
 
     const safety = window.setTimeout(finish, SAFETY_UNMOUNT_MS);

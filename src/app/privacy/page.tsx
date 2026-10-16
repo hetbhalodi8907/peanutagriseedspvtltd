@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata({
  * It makes no legal assurances (retention periods, statutory rights): those must be
  * supplied or reviewed by the company before launch (docs/LAUNCH-READINESS.md).
  */
-const LAST_UPDATED = "15 October 2026";
+const LAST_UPDATED = "16 October 2026";
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -74,9 +74,8 @@ export default function PrivacyPage() {
 
             <Block title="Cookies and tracking">
               <p>
-                This website does not use cookies, analytics or advertising trackers, and it does not load content from other
-                websites. It stores one small setting in your browser for the current session, so the logo introduction is not
-                shown again on every page.
+                This website does not use cookies, analytics or advertising trackers, it does not store information in your
+                browser, and it does not load content from other websites.
               </p>
             </Block>
 

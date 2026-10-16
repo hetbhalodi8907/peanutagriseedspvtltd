@@ -15,7 +15,7 @@ Phase 8 audit, 15 October 2026 (branch `phase-8-launch-audit`). This document re
 - **Pages:** all public pages load, unknown URLs return 404 (with `noindex`), and uppercase URLs redirect to lowercase.
 - **Branding:**
   - The official logo is unaltered.
-  - The animated intro (skip, Escape, reduced motion, once per session) works.
+  - The animated intro (skip, Escape, reduced motion; plays on every full page load, never on client-side navigation) works.
   - Desktop and mobile navigation work.
 - **About:** the MD and CEO profiles use the correct supplied portraits.
 - **Seed catalogue:**
@@ -203,7 +203,7 @@ npm start              # next start (use PORT=… or -p to change the port)
 
 ## 7. Privacy and trust
 
-- **No tracking:** no cookies, analytics, advertising trackers or third-party requests (verified on all pages and during a form submission). The only browser storage is one `sessionStorage` flag so the intro isn't replayed.
+- **No tracking:** no cookies, analytics, advertising trackers or third-party requests (verified on all pages and during a form submission). No browser storage (cookies, localStorage or sessionStorage) is used.
 - **Data collected:** only name, mobile, village/city, variety, quantity and an optional message. No customer email address is collected.
 - **Delivery:** enquiries are emailed via Resend to the company inbox and are not stored in a database. Server logs contain a reference and outcome, never names or numbers.
 - **`/privacy` (new):** a factual notice of the above, linked from the footer and the form. **It makes no legal assurances.** Retention periods, data-request handling and jurisdiction-specific wording need owner or legal review before launch.

@@ -36,7 +36,7 @@ The About company-story section reuses `flowering-groundnut-plants.jpg` from the
 | `public/brand/peanut-agri-seeds-logo.png` | Official company logo, supplied by the company. Unaltered. |
 | `src/app/icon.png`, `src/app/apple-icon.png` | Resized copies of the official logo (favicons). |
 | `src/assets/images/leadership/yogesh-bhalodi-managing-director.jpg` | Official photograph of Mr Yogesh Bhalodi, Managing Director. Supplied by the company (960×1280). Unaltered; metadata checked (none present). |
-| `src/assets/images/leadership/het-bhalodi-chief-executive-officer.jpg` | Official photograph of Mr Het Bhalodi, Chief Executive Officer. Supplied by the company. Resized from 3024×4032 to 1500×2000 and converted to sRGB; all EXIF/IPTC metadata (camera details) removed. Not otherwise altered. |
+| `src/assets/images/leadership/het-bhalodi-chief-executive-officer.jpg` | Official photograph of Mr Het Bhalodi, Chief Executive Officer. Supplied by the company (replaced 16 October 2026). Converted from iPhone HEIC, turned upright using its own orientation tag, resized from 3024×4032 to 1500×2000 and converted from Display P3 to sRGB; all EXIF/XMP metadata (camera, date and face-region details) removed. Not cropped or otherwise altered. |
 
 | `src/assets/images/seeds/*.png` (11 files) | Official packaging images for the 11 varieties, supplied by the company (Phase 4). Stored byte-for-byte as supplied (1024×1536 PNG), renamed by variety slug; see the mapping below. |
 

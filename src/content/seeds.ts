@@ -8,14 +8,28 @@
  */
 import type { StaticImageData } from "next/image";
 import { ENQUIRY_ANCHOR, siteConfig } from "@/config/site";
+import seed441 from "@/assets/images/seeds/441.png"; // an identifier can't start with a digit
+import g10 from "@/assets/images/seeds/g10.png";
 import g20 from "@/assets/images/seeds/g20.png";
 import g22 from "@/assets/images/seeds/g22.png";
+import g23 from "@/assets/images/seeds/g23.png";
+import g41 from "@/assets/images/seeds/g41.png";
+import g45 from "@/assets/images/seeds/g45.png";
 import girnar4 from "@/assets/images/seeds/girnar-4.png";
 import girnar5 from "@/assets/images/seeds/girnar-5.png";
 import menakshi from "@/assets/images/seeds/menakshi.png";
+import no28 from "@/assets/images/seeds/no-28.png";
+import no32 from "@/assets/images/seeds/no-32.png";
+import no39 from "@/assets/images/seeds/no-39.png";
+import no66 from "@/assets/images/seeds/no-66.png";
+import no9 from "@/assets/images/seeds/no-9.png";
 import peanutAgriSeedsSpecial from "@/assets/images/seeds/peanut-agri-seeds-special.png";
 import redCherry from "@/assets/images/seeds/red-cherry.png";
+import rembo from "@/assets/images/seeds/rembo.png";
 import sona from "@/assets/images/seeds/sona.png";
+import sundri from "@/assets/images/seeds/sundri.png";
+import sweta from "@/assets/images/seeds/sweta.png";
+import t9 from "@/assets/images/seeds/t-9.png";
 import tj37 from "@/assets/images/seeds/tj-37.png";
 import tj38 from "@/assets/images/seeds/tj-38.png";
 import vardan from "@/assets/images/seeds/vardan.png";
@@ -57,6 +71,21 @@ export const seedVarieties: readonly SeedVariety[] = [
   variety("sona", "SONA", sona),
   variety("vardan", "VARDAN", vardan),
   variety("peanut-agri-seeds-special", "PEANUT AGRI SEEDS SPECIAL", peanutAgriSeedsSpecial),
+  // Added in Phase 9, in the order supplied by the company.
+  variety("g23", "G23", g23),
+  variety("g45", "G45", g45),
+  variety("g10", "G10", g10),
+  variety("no-39", "NO-39", no39),
+  variety("t-9", "T-9", t9),
+  variety("g41", "G41", g41),
+  variety("sweta", "SWETA", sweta),
+  variety("sundri", "SUNDRI", sundri),
+  variety("no-28", "NO-28", no28),
+  variety("no-32", "NO-32", no32),
+  variety("441", "441", seed441),
+  variety("no-9", "NO-9", no9),
+  variety("no-66", "NO-66", no66),
+  variety("rembo", "REMBO", rembo),
 ];
 
 export const seedVarietyCount = seedVarieties.length;
@@ -87,6 +116,18 @@ export function searchSeedVarieties(query: string, seeds: readonly SeedVariety[]
   if (!key) return seeds;
   return seeds.filter((seed) => normaliseSearch(seed.name).includes(key));
 }
+
+/**
+ * Fails the build if two varieties share a slug, a name key (used by search and the
+ * ?variety= prefill) or a packaging file: any of these could open the wrong variety.
+ */
+function assertUnique(label: string, values: string[]) {
+  const duplicate = values.find((value, index) => values.indexOf(value) !== index);
+  if (duplicate) throw new Error(`Duplicate seed ${label} "${duplicate}" in src/content/seeds.ts`);
+}
+assertUnique("slug", seedVarieties.map((seed) => seed.slug));
+assertUnique("name", seedVarieties.map((seed) => normaliseSearch(seed.name)));
+assertUnique("packaging image", seedVarieties.map((seed) => seed.packaging.src));
 
 /** Catalogue page copy. */
 export const seedCatalogue = {

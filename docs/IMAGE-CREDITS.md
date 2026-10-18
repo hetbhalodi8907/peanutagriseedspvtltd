@@ -37,8 +37,7 @@ The About company-story section reuses `flowering-groundnut-plants.jpg` from the
 | `src/app/icon.png`, `src/app/apple-icon.png` | Resized copies of the official logo (favicons). |
 | `src/assets/images/leadership/yogesh-bhalodi-managing-director.jpg` | Official photograph of Mr Yogesh Bhalodi, Managing Director. Supplied by the company (960×1280). Unaltered; metadata checked (none present). |
 | `src/assets/images/leadership/het-bhalodi-chief-executive-officer.jpg` | Official photograph of Mr Het Bhalodi, Chief Executive Officer. Supplied by the company (replaced 16 October 2026). Converted from iPhone HEIC, turned upright using its own orientation tag, resized from 3024×4032 to 1500×2000 and converted from Display P3 to sRGB; all EXIF/XMP metadata (camera, date and face-region details) removed. Not cropped or otherwise altered. |
-
-| `src/assets/images/seeds/*.png` (11 files) | Official packaging images for the 11 varieties, supplied by the company (Phase 4). Stored byte-for-byte as supplied (1024×1536 PNG), renamed by variety slug; see the mapping below. |
+| `src/assets/images/seeds/*.png` (25 files) | Official packaging images for the 25 varieties, supplied by the company (11 in Phase 4, 14 added in Phase 9). Stored byte-for-byte as supplied (1024×1536 PNG), renamed by variety slug; see the mapping below. |
 
 ### Packaging image mapping (verified 2026-10-15 by reading the name printed on each package)
 
@@ -56,6 +55,27 @@ The About company-story section reuses `flowering-groundnut-plants.jpg` from the
 | VARDAN | `vardan.png` | VARDAN |
 | PEANUT AGRI SEEDS SPECIAL | `peanut-agri-seeds-special.png` | PEANUT AGRI SEEDS SPECIAL |
 
-The packaging files carry embedded C2PA Content Credentials (a provenance record signed by OpenAI, indicating they were produced with an AI image tool). It contains no personal data and has been left intact. The site presents these files as packaging designs, not as photographs of physical packs.
+### Added in Phase 9 (verified 2026-10-18)
+
+Each file was matched by reading the name printed on the package, not by upload order, then cross-checked by on-device text recognition (Apple Vision) of the name banner. All 14 agree.
+
+| Variety | File | Name printed on package |
+| --- | --- | --- |
+| G23 | `g23.png` | G23 |
+| G45 | `g45.png` | G45 |
+| G10 | `g10.png` | G10 |
+| NO-39 | `no-39.png` | NO-39 |
+| T-9 | `t-9.png` | T-9 |
+| G41 | `g41.png` | G41 |
+| SWETA | `sweta.png` | SWETA |
+| SUNDRI | `sundri.png` | SUNDRI |
+| NO-28 | `no-28.png` | NO-28 |
+| NO-32 | `no-32.png` | NO-32 |
+| 441 | `441.png` | 441 |
+| NO-9 | `no-9.png` | NO-9 |
+| NO-66 | `no-66.png` | NO-66 |
+| REMBO | `rembo.png` | REMBO |
+
+All 25 packaging files carry embedded C2PA Content Credentials (a provenance record signed by OpenAI, indicating they were produced with an AI image tool). It contains no personal data and has been left intact. The site presents these files as packaging designs, not as photographs of physical packs.
 
 Leadership portraits are registered in `leadershipPortraits` (`src/content/images.ts`), keyed by the leader `id` in `site.ts`, so a photo cannot be paired with the wrong person. Profiles display them at their native 3:4 ratio (no cropping). The small circular thumbnails in the "Two Generations" section are face-centred crops of the same files.

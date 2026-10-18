@@ -28,7 +28,7 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 | --- | --- |
 | `src/config/site.ts` | **Single source of truth** for company facts, leadership, contact details (phone defined once; call and WhatsApp links derive from it) and navigation. Only confirmed facts go here. |
 | `src/content/home.ts` | Homepage copy, section by section. Reads facts from `site.ts`. |
-| `src/content/seeds.ts` | **Seed catalogue data**: the 11 varieties (slug, exact name, packaging image, descriptor, detail status), search helpers and catalogue copy. The grid, count, search, detail pages and static params all derive from it. |
+| `src/content/seeds.ts` | **Seed catalogue data**: all 25 varieties (slug, exact name, packaging image, descriptor, detail status), search helpers and catalogue copy. The grid, count, search, detail pages and static params all derive from it. |
 | `src/content/about.ts` | About Us copy: story, leadership biographies, father–son section, approach, brand statement. |
 | `src/content/images.ts` | Photo registry: file, alt text, credit; plus `leadershipPortraits` keyed by leader id. See `docs/IMAGE-CREDITS.md`. |
 | `src/assets/images/{home,about}/` | Licensed (CC0) photography, statically imported (auto dimensions, blur placeholders, AVIF/WebP). |

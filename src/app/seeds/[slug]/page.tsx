@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 
 type SeedPageProps = { params: Promise<{ slug: string }> };
 
-// Only the 11 known varieties exist; any other slug is a 404.
+// Only the varieties listed in src/content/seeds.ts exist; any other slug is a 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {

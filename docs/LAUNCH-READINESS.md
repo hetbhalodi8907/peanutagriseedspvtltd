@@ -19,10 +19,10 @@ Phase 8 audit, 15 October 2026 (branch `phase-8-launch-audit`). This document re
   - Desktop and mobile navigation work.
 - **About:** the MD and CEO profiles use the correct supplied portraits.
 - **Seed catalogue:**
-  - All 11 varieties are present, with correct packaging images, search, detail pages, previous/next links and 404s.
+  - All 25 varieties are present (11 from Phase 4, 14 added in Phase 9), with correct packaging images, search, detail pages, previous/next links and 404s.
   - The "Detailed information is being prepared" notices remain (Phase 5 deferred).
 - **Contact:**
-  - The enquiry form validates in the browser and on the server, prefills from all 11 variety pages, and never shows a false success.
+  - The enquiry form validates in the browser and on the server, prefills from all 25 variety pages, and never shows a false success.
   - Call, WhatsApp, email and Maps links are correct.
   - Hours are correct (Mon–Sat 8:00 AM–8:00 PM, Sun 9:00 AM–2:00 PM) and shared by the page, footer and structured data.
 - **Security:**
@@ -140,7 +140,7 @@ The setup instructions in [INQUIRY-EMAIL-SETUP.md](INQUIRY-EMAIL-SETUP.md) were 
   - nothing points at an invented domain.
 - **With `SITE_URL` set** (verified with a test build on a reserved `.example` domain, never committed):
   - self-referencing canonical, `og:url`, `og:image` and `twitter:image` on every page;
-  - a sitemap of exactly the 18 public pages (including all 11 varieties);
+  - a sitemap of exactly the 32 public pages, including all 25 varieties (re-checked in Phase 9 on the development server with a reserved `.test` domain);
   - `robots.txt` with Sitemap and Host lines;
   - LocalBusiness JSON-LD gains `url` and `logo`.
 - **`robots.txt`:** allows everything except `/api/`.
@@ -184,7 +184,7 @@ npm start              # next start (use PORT=… or -p to change the port)
 ### Post-deploy smoke test
 
 1. Open `/`: the logo intro plays once and can be skipped; the menu works on a phone.
-2. Open `/seeds`: 11 packages are visible; search "tj37" shows TJ-37; open a variety page.
+2. Open `/seeds`: 25 packages are visible; search "tj37" shows TJ-37 and "no 39" shows NO-39; open a variety page.
 3. On a variety page, "Enquire About This Seed" opens the form with that variety selected.
 4. Submit a clearly marked **test** enquiry (with the owner's permission). The reference shown must arrive at peanutagriseeds@gmail.com, and the Resend dashboard should show *Delivered*.
 5. Tap the Call, WhatsApp, Email and "Find Us on Google Maps" links on a phone.
@@ -267,5 +267,5 @@ Automated tools catch only some accessibility issues. **No claim of full WCAG co
 [IMAGE-CREDITS.md](IMAGE-CREDITS.md) was reviewed and is unchanged.
 - **CC0 photos:** credits and sources are listed; they are never captioned as the company's own fields or factory.
 - **Portraits:** the supplied MD and CEO originals are correctly assigned (tested) and unaltered apart from documented resizing and metadata removal.
-- **Packaging:** the 11 packaging files are byte-identical to the supplied originals and correctly mapped (tested). Their C2PA provenance (AI-generated) remains documented.
+- **Packaging:** the 25 packaging files are byte-identical to the supplied originals and correctly mapped (tested, including a pixel comparison of the images the site actually serves). Their C2PA provenance (AI-generated) remains documented.
 - **Logo:** the supplied original.

@@ -10,8 +10,8 @@ All five photographs are by the **Alabama Cooperative Extension System (ACES)**,
 | --- | --- | --- | --- |
 | `peanut-field.jpg` | Hero background | Justin Miller (ACES) | <https://commons.wikimedia.org/wiki/File:Field_of_Peanut_Plants.jpg> |
 | `harvested-groundnut-pods.jpg` | Company introduction | Bruce Dupree (ACES) | <https://commons.wikimedia.org/wiki/File:Peanut_Plant_Harvest.jpg> |
-| `groundnut-pods-closeup.jpg` | Seed range: Premium category | Bruce Dupree (ACES) | <https://commons.wikimedia.org/wiki/File:Peanut_Plant_Harvest_-_49234626146.jpg> |
-| `flowering-groundnut-plants.jpg` | Seed range: Hybrid category | Justin Miller (ACES) | <https://commons.wikimedia.org/wiki/File:Peanut_Plants.jpg> |
+| `groundnut-pods-closeup.jpg` | Seed range: Premium category; Quality page hero | Bruce Dupree (ACES) | <https://commons.wikimedia.org/wiki/File:Peanut_Plant_Harvest_-_49234626146.jpg> |
+| `flowering-groundnut-plants.jpg` | Seed range: Hybrid category; Quality page philosophy | Justin Miller (ACES) | <https://commons.wikimedia.org/wiki/File:Peanut_Plants.jpg> |
 | `freshly-dug-groundnuts.jpg` | Quality commitment | Bruce Dupree (ACES) | <https://commons.wikimedia.org/wiki/File:Peanut_Plant_Harvest_-_49234850342.jpg> |
 
 Processing: originals were downloaded on 2026-10-15 and resized (longest edge 2400px for the hero, 1800px for the others; JPEG quality 78). No other edits. Responsive WebP versions (metadata-free) are generated at build time into `public/_img` by `scripts/optimize-images.mjs`.
@@ -23,7 +23,7 @@ Also **CC0 1.0** via Wikimedia Commons. Downloaded 2026-10-15, resized, converte
 | File (`src/assets/images/about/`) | Used in | Photographer | Source |
 | --- | --- | --- | --- |
 | `groundnut-seedling-salem.jpg` | About hero | Surendhar Kandasami (Salem, Tamil Nadu) | <https://commons.wikimedia.org/wiki/File:Peanut_in_salem.jpg> |
-| `sowing-groundnut-field.jpg` | About brand statement | Katie Nichols (ACES) | <https://commons.wikimedia.org/wiki/File:Planting_Peanuts_Into_the_Soil.jpg> |
+| `sowing-groundnut-field.jpg` | About brand statement; Dealer Enquiry hero | Katie Nichols (ACES) | <https://commons.wikimedia.org/wiki/File:Planting_Peanuts_Into_the_Soil.jpg> |
 
 The About company-story section reuses `flowering-groundnut-plants.jpg` from the homepage set.
 

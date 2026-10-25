@@ -53,7 +53,7 @@ Phase 8 audit, 15 October 2026 (branch `phase-8-launch-audit`). This document re
 - **Shared rate-limit store:** if hosting is serverless or multi-instance, use Upstash/Redis so limits are shared (§3).
 - **Spam:** add Cloudflare Turnstile only if spam appears.
 - **Verify the factory's exact Google Maps place** and switch the button from address search to that place.
-- **Placeholder pages:** add real content to `/quality` and `/dealer-enquiry`, or mark them `noindex` until then.
+- **Placeholder pages:** done. `/quality` and `/dealer-enquiry` have real content (Task 04); no placeholder pages remain.
 - **Social image:** approve the official logo, or supply a dedicated 1200×630 image.
 - **Performance:**
   - Consider a shorter or skippable-by-default intro if first-visit LCP matters more than the brand moment (§8).

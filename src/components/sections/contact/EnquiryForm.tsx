@@ -38,12 +38,18 @@ const newSubmissionKey = () =>
     ? crypto.randomUUID()
     : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
 
+type EnquiryFormProps = {
+  varieties: VarietyOption[];
+  /** Starting text for the optional message on ?type=<key> links, e.g. { dealer: "…" }. */
+  typeMessages?: Readonly<Record<string, string>>;
+};
+
 /**
  * Customer enquiry form. Validates in the browser with the same rules as the server,
  * then POSTs to /api/enquiry. Shows success only after the server confirms the
  * email provider accepted the enquiry; on failure the entered values are kept.
  */
-export function EnquiryForm({ varieties }: { varieties: VarietyOption[] }) {
+export function EnquiryForm({ varieties, typeMessages }: EnquiryFormProps) {
   const [values, setValues] = useState<EnquiryValues>(emptyEnquiry);
   const [errors, setErrors] = useState<EnquiryErrors>({});
   const [touched, setTouched] = useState<Partial<Record<EnquiryField, boolean>>>({});
@@ -55,14 +61,30 @@ export function EnquiryForm({ varieties }: { varieties: VarietyOption[] }) {
   const startedAt = useRef(Date.now());
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
+  const prefilled = useRef(false);
   const uid = useId();
   const id = (field: string) => `${uid}-${field}`;
 
-  // Preselect a variety from ?variety= (official name or slug); unknown values are ignored.
+  // Prefill from the link, once, on the initial form only. ?variety= (official name or slug)
+  // preselects a variety; ?type= (e.g. dealer) starts the optional message but never replaces
+  // anything already typed. Unknown values are ignored.
   useEffect(() => {
-    const slug = matchVarietyParam(new URLSearchParams(window.location.search).get("variety"), varieties);
-    if (slug) setValues((current) => ({ ...current, variety: slug }));
-  }, [varieties]);
+    if (prefilled.current) return;
+    prefilled.current = true;
+    const params = new URLSearchParams(window.location.search);
+    const slug = matchVarietyParam(params.get("variety"), varieties);
+    const type = params.get("type") ?? "";
+    const preset =
+      typeMessages && Object.hasOwn(typeMessages, type) && typeof typeMessages[type] === "string"
+        ? typeMessages[type].slice(0, LIMITS.message.max)
+        : "";
+    if (!slug && !preset) return;
+    setValues((current) => ({
+      ...current,
+      ...(slug ? { variety: slug } : {}),
+      ...(preset && !current.message ? { message: preset } : {}),
+    }));
+  }, [varieties, typeMessages]);
 
   useEffect(() => {
     if (status.kind === "success") successRef.current?.focus();

@@ -20,6 +20,18 @@ export const enquirySection = {
   lede: "Tell us what you need and our team will review your requirements.",
 };
 
+/**
+ * Starting text for the optional message on links such as /contact?type=dealer#enquiry.
+ * The form applies it once, on first load, and only while the message is still empty.
+ */
+export const enquiryTypeMessages: Record<string, string> = {
+  // The company name ends in "LTD.", which also ends the first sentence.
+  dealer: `I am interested in discussing a dealership or distribution opportunity with ${siteConfig.name} My business details and requirements are provided below.`,
+};
+
+/** The Contact page enquiry form, opened for a dealership enquiry (no variety preselected). */
+export const dealerEnquiryHref = `/contact?type=dealer#${ENQUIRY_ANCHOR}`;
+
 export const contactActionsCopy = {
   title: "Prefer to talk?",
   lede: "Reach our team directly. If the form is ever unavailable, phone and WhatsApp always work.",

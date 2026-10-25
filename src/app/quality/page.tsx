@@ -1,27 +1,29 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
-import { UpcomingSection } from "@/components/sections/UpcomingSection";
+import { QualityContact } from "@/components/sections/quality/QualityContact";
+import { QualityPhilosophy } from "@/components/sections/quality/QualityPhilosophy";
+import { QualityPrinciples } from "@/components/sections/quality/QualityPrinciples";
+import { QualityProducts } from "@/components/sections/quality/QualityProducts";
+import { SplitHero } from "@/components/sections/SplitHero";
 import { siteConfig } from "@/config/site";
+import { qualityHero } from "@/content/quality";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Quality",
-  // siteConfig.name already ends with a full stop.
-  description: `Seed quality at ${siteConfig.name} Detailed information about our approach to groundnut seed quality is being prepared.`,
+  title: "Seed Quality Approach",
+  // The company name ends in "LTD.", which takes the comma directly.
+  description: `Discover the quality-focused approach of ${siteConfig.name}, serving the agricultural market with premium groundnut seed products.`,
   path: "/quality",
 });
 
+// Page copy lives in src/content/quality.ts; company facts in src/config/site.ts.
 export default function QualityPage() {
   return (
     <>
-      <PageHero eyebrow="Quality" title="Our commitment to seed quality" />
-      <UpcomingSection
-        planned={[
-          "How we approach groundnut seed quality",
-          "Seed handling and processing at our Sondarada factory",
-          "Guidance for farmers and dealers",
-        ]}
-      />
+      <SplitHero id="quality-page-heading" {...qualityHero} />
+      <QualityPhilosophy />
+      <QualityPrinciples />
+      <QualityProducts />
+      <QualityContact />
     </>
   );
 }

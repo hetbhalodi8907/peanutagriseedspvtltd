@@ -10,7 +10,7 @@ import { ClockIcon, MapPinIcon } from "@/components/icons";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ENQUIRY_ANCHOR, factoryAddressLine, siteConfig } from "@/config/site";
-import { contactActionsCopy, enquirySection } from "@/content/contact";
+import { contactActionsCopy, enquirySection, enquiryTypeMessages } from "@/content/contact";
 import { seedVarietyOptions } from "@/content/seeds";
 import { hoursSummary } from "@/lib/business-hours";
 import { pageMetadata } from "@/lib/seo";
@@ -23,7 +23,8 @@ export const metadata: Metadata = pageMetadata({
 });
 
 // Statically generated; the enquiry form posts to /api/enquiry.
-// ?variety=<name or slug> preselects a variety; #enquiry scrolls to the form.
+// ?variety=<name or slug> preselects a variety; ?type=dealer starts the message for a
+// dealership enquiry; #enquiry scrolls to the form.
 export default function ContactPage() {
   return (
     <>
@@ -45,7 +46,7 @@ export default function ContactPage() {
             </h2>
             <p className="mt-4 max-w-xl leading-relaxed text-charcoal/75">{enquirySection.lede}</p>
             <div className="mt-9 rounded-sm border border-forest-900/10 bg-white p-6 shadow-[0_24px_60px_-40px_rgb(23_59_42/0.45)] sm:p-9">
-              <EnquiryForm varieties={seedVarietyOptions} />
+              <EnquiryForm varieties={seedVarietyOptions} typeMessages={enquiryTypeMessages} />
             </div>
           </div>
 

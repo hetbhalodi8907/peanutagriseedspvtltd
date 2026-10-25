@@ -22,6 +22,25 @@ npm run lint      # ESLint
 
 The enquiry form needs email settings: copy `.env.example` to `.env.local` and see [docs/INQUIRY-EMAIL-SETUP.md](docs/INQUIRY-EMAIL-SETUP.md). The site works without them, but the form will report that enquiries cannot be sent.
 
+## Tests
+
+End-to-end regression tests (Playwright) live in `tests/` and run against the production build.
+
+```bash
+npx playwright install chromium   # once per machine: the test browser
+npm test                          # production build, then all tests
+npm run test:e2e                  # tests only, against the existing build
+```
+
+- **Never sends real email.** The tests start their own servers: the site on port 3100 wired to a local mock email provider (`tests/support/mock-resend.mjs`, port 3201) with a fake key, and a second copy on 3102 with email unconfigured. These values override `.env.local`. Ports 3100, 3102 and 3201 must be free.
+- **What's covered:**
+  - `tests/e2e/quality-dealer.spec.ts`: Quality and Dealer Enquiry content, metadata, links, previews, navigation, layout at 320–1920px, accessibility and keyboard focus.
+  - `tests/e2e/enquiry.spec.ts`: prefill (`?type=dealer`, `?variety=`), protection of typed text, limits, submissions, honest failure, endpoint protections.
+  - `tests/e2e/catalogue.spec.ts`: the 25 varieties, verified image mapping, search, variety pages, preselection.
+  - `tests/e2e/site.spec.ts`: every page at three widths (axe accessibility scan), contact details, About portraits, logo intro, storage and security headers.
+- **Verified catalogue:** `tests/support/varieties.ts` holds the official order, names and SHA-256 of each packaging file. When a variety is added or a package replaced, update it together with `src/content/seeds.ts`, after checking the name printed on the package.
+- Output from failed runs goes to `test-results/` (git-ignored).
+
 ## Where things live
 
 | Path | Purpose |
@@ -39,21 +58,23 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 | `src/components/brand/` | `BrandLogo` (logo with missing-asset fallback), `BrandLockup` (logo + name), `BrandIntro` + `intro-script.ts`. |
 | `src/components/layout/` | `TopBar`, `SiteHeader`, `MobileNav`, `SiteFooter`. |
 | `src/components/ui/` | `Container`, `ButtonLink` / `buttonClasses`, `Eyebrow`, `SectionHeading`. |
-| `src/components/sections/` | Shared sections: `PageHero`, `ContactDetails`, `UpcomingSection`, `FieldLines`. |
+| `src/components/sections/` | Shared sections: `PageHero`, `SplitHero` (inner-page hero with a framed photo), `ContactDetails`, `FieldLines`. |
 | `src/components/sections/about/` | About page sections, in order: `AboutHero`, `CompanyStory`, `LeadershipProfiles`, `LeadershipBridge`, `ApproachSection`, `BrandStatement`, `AboutContact`. |
-| `src/components/sections/seeds/` | Catalogue: `SeedsHero`, `SeedCatalogue` (client: search + grid), `SeedCard`, `PackagingImage`, `SeedsHelp`, and the variety page `SeedDetail`. |
+| `src/components/sections/seeds/` | Catalogue: `SeedsHero`, `SeedCatalogue` (client: search + grid), `SeedCard`, `PackagingImage`, `SeedsHelp`, `SeedPreviewGrid` (small linked package previews used on other pages), and the variety page `SeedDetail`. |
 | `src/components/sections/home/` | Homepage sections, in page order: `HomeHero`, `TrustStrip`, `CompanyIntro`, `SeedRangePreview`, `ValuesSection`, `QualityCommitment`, `DealerCta`, `ContactQuickActions`, plus `FloatingWhatsApp`. |
 | `src/app/seeds/[slug]/page.tsx` | One statically generated page per variety (`generateStaticParams`, `dynamicParams = false`). Unknown slugs return 404. |
 | `image-config.mjs` | Responsive image widths, shared by `next.config.ts`, the loader and the generator. |
 | `scripts/optimize-images.mjs` | Build-time generator: writes `public/_img/<name>-<width>.webp` for every site image (not committed). |
 | `src/lib/image-loader.ts` | Custom `next/image` loader that points srcsets at the generated files. |
 | `src/middleware.ts` | Redirects any URL containing capital letters to lowercase (308). See Gotchas. |
-| `src/app/{quality,dealer-enquiry}` | Routes that still render `UpcomingSection` placeholders. Replace each when its module is built. |
+| `src/app/quality/page.tsx`, `src/content/quality.ts` | Quality page: hero, philosophy, four principles, a product preview from the catalogue, closing contact band. Sections in `src/components/sections/quality/`. |
+| `src/app/dealer-enquiry/page.tsx`, `src/content/dealer.ts` | Dealer Enquiry page: hero, who can enquire, the three-step enquiry process, a collection preview, contact actions. Sections in `src/components/sections/dealer/`. Enquiries go through the Contact page form (`/contact?type=dealer#enquiry`). |
+| `src/content/showcase.ts` | `pickSeedVarieties()`: chooses varieties by slug for page previews, always in catalogue order; an unknown slug fails the build. |
 | `src/app/api/enquiry/route.ts`, `src/lib/enquiry/` | Enquiry endpoint and its validation, email, Resend and rate-limit modules. See the email setup guide. |
 | `src/content/contact.ts` | Contact page copy (hero, hours, location, explore links). |
 | `src/lib/business-hours.ts` | Formats `siteConfig.factoryHours` for the Contact page, the footer and the structured data. |
 | `src/components/sections/contact/` | Contact page sections: `ContactHero`, `ContactActionList`, `FactoryHours`, `FactoryLocation`, `ContactExplore`, `LocalBusinessJsonLd`, plus `EnquiryForm`. |
-| `src/components/sections/contact/EnquiryForm.tsx` | The enquiry form on `/contact` (`?variety=<name or slug>` preselects a variety). |
+| `src/components/sections/contact/EnquiryForm.tsx` | The enquiry form on `/contact` (`?variety=<name or slug>` preselects a variety; `?type=dealer` starts the optional message). |
 | `docs/INQUIRY-EMAIL-SETUP.md` | Email provider, environment variables, deployment, live-delivery check, troubleshooting. |
 | `src/lib/seo.ts` | `SITE_URL` handling and `pageMetadata()` (titles, descriptions, canonical, Open Graph/Twitter) used by every page. |
 | `src/app/robots.ts`, `src/app/sitemap.ts` | `robots.txt` and `sitemap.xml` (the sitemap is empty until `SITE_URL` is set). |
@@ -85,6 +106,13 @@ The enquiry form needs email settings: copy `.env.example` to `.env.local` and s
 - **Hosting:** the site now has one server route (`/api/enquiry`), so it must be hosted with a Node server or serverless functions, not a static export. All pages remain statically generated.
 - **Shared validation:** the browser form and the server use the same rules (`src/lib/enquiry/schema.ts`). The variety dropdown and server validation both come from `seedVarietyOptions` in `src/content/seeds.ts`.
 - **Variety links:** variety pages link to `/contact?variety=<slug>`; `seedEnquiryHref()` builds the URL.
+- **Dealer links:** the Dealer Enquiry page links to `/contact?type=dealer#enquiry` (`dealerEnquiryHref`). The form then starts the optional message with the dealership text from `enquiryTypeMessages` (`src/content/contact.ts`): once, on first load, only while the message is empty, and within the normal message limit. No variety is preselected, and there is no separate dealer form or email flow.
+
+## Quality and Dealer Enquiry pages (Task 04)
+
+- Copy lives in `src/content/quality.ts` and `src/content/dealer.ts`; company facts and the variety count come from `siteConfig` and `seedVarieties`, and previewed packages from the catalogue (`pickSeedVarieties`).
+- Keep both pages to what the company has confirmed: no inspection, testing, grading or certification claims, and no dealer benefits, margins, territories, guaranteed supply or response times.
+- The hero photos are general CC0 crop imagery (see `docs/IMAGE-CREDITS.md`), never presented as the company's own fields or factory.
 
 ## Contact page notes (Phase 7)
 

@@ -1,29 +1,30 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
-import { UpcomingSection } from "@/components/sections/UpcomingSection";
+import { DealerAudiences } from "@/components/sections/dealer/DealerAudiences";
+import { DealerCollection } from "@/components/sections/dealer/DealerCollection";
+import { DealerContact } from "@/components/sections/dealer/DealerContact";
+import { DealerProcess } from "@/components/sections/dealer/DealerProcess";
+import { SplitHero } from "@/components/sections/SplitHero";
 import { siteConfig } from "@/config/site";
+import { dealerHero } from "@/content/dealer";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Dealer Enquiry",
-  // siteConfig.name already ends with a full stop.
-  description: `Dealer, distributor and bulk purchase enquiries for ${siteConfig.name} Contact our team to discuss groundnut seed varieties and your requirements.`,
+  title: "Become a Seed Dealer",
+  // The company name ends in "LTD.", so no extra period is added before "to".
+  description: `Contact ${siteConfig.name} to discuss groundnut seed dealership, distribution, retail, and bulk-buying requirements.`,
   path: "/dealer-enquiry",
 });
 
+// Page copy lives in src/content/dealer.ts. Enquiries use the existing Contact page form
+// (/contact?type=dealer#enquiry), so there is no separate submission flow.
 export default function DealerEnquiryPage() {
   return (
     <>
-      <PageHero eyebrow="Dealer Enquiry" title="Partner with us">
-        <p>We work with dealers, distributors and bulk purchasers of groundnut seeds.</p>
-      </PageHero>
-      <UpcomingSection
-        note="A dedicated dealer enquiry form is being prepared. Until then, you can send an enquiry through the form on our Contact Us page, or call or email us directly. This page will include:"
-        planned={[
-          "An enquiry form for dealers, distributors and bulk purchasers",
-          "Direct calling and WhatsApp options",
-        ]}
-      />
+      <SplitHero id="dealer-page-heading" {...dealerHero} />
+      <DealerAudiences />
+      <DealerProcess />
+      <DealerCollection />
+      <DealerContact />
     </>
   );
 }
